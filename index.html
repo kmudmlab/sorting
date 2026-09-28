@@ -31,11 +31,15 @@ main{max-width:1600px;margin:0 auto;padding:30px 40px 24px}.page-heading{display
 .aux-row{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:4px 0}.aux-row code{min-width:38px}.aux-value{padding:1px 5px;border-radius:4px;background:#f0f3f8;color:#61708a}.aux-value.comparing-left{color:#9f530b;background:#fff0db;box-shadow:inset 0 0 0 1px #e5aa63}.aux-value.comparing-right{color:#7541b6;background:#f1eafa;box-shadow:inset 0 0 0 1px #b094d5}.aux-value.comparing-both{color:#704075;background:#f8e5eb}
 @media(max-width:480px){.chart-panel .panel-head{align-items:flex-start;flex-wrap:wrap;gap:6px}.comparison-panel{padding:10px 14px 12px}.comparison-equation{grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:7px}.comparison-result{grid-column:1/-1;justify-self:end;margin-top:2px}.operand{padding-left:7px;padding-right:2px}.comparison-panel{min-height:130px}.comparison-count{font-size:11px}.comparison-heading{gap:7px}.comparison-next{font-size:12px}}
 
+.site-nav{display:flex;gap:16px;font-size:14px;white-space:nowrap}.site-nav a{color:var(--blue);text-underline-offset:4px}.site-nav a[aria-current]{font-weight:700;color:var(--ink)}
+.assignment-replay .topbar,.assignment-replay .page-heading,.assignment-replay .details,.assignment-replay .footer{display:none}.assignment-replay main{padding:16px}.assignment-replay #preset{display:none}
+@media(max-width:650px){.site-nav{gap:9px;font-size:13px}.topbar .runtime{display:none}}
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="brand"><div class="mark" aria-hidden="true"><span></span><span></span><span></span></div><div class="brand-name">sort<span>/</span>lab</div><div class="brand-divider"></div><span class="brand-caption">PYTHON ALGORITHM STUDIO</span></div>
+  <nav class="site-nav" aria-label="메인 메뉴"><a href="index.html" aria-current="page">정렬 실험실</a><a href="assignments.html">구현 과제</a></nav>
   <div class="runtime" id="runtime" data-state="idle" role="status"><span class="runtime-dot"></span><span id="runtime-text">실행 시 Python을 불러옵니다</span></div>
 </header>
 <main>
@@ -421,7 +425,7 @@ previewInput();
 new ResizeObserver(()=>{const frame=state.frames[state.index]||state.preview[0];if(frame)drawChart(frame,false);}).observe($('chart'));
 function showNotice(text,kind='info'){$('notice').hidden=!text;$('notice').className='notice '+kind;$('notice').textContent=text;}
 function setRuntime(text,kind){$('runtime-text').textContent=text;$('runtime').dataset.state=kind;}
-function setBusy(busy){state.busy=busy;for(const id of ['run','preset','shuffle','array-input'])$(id).disabled=busy;$('code').readOnly=busy;$('cancel').hidden=!busy;$('editing-state').textContent=busy?'실행 중':'수정 가능';$('run-text').textContent=busy?'실행 기록 중…':'실행 & 재생';updateControls();}
+function setBusy(busy){state.busy=busy;for(const id of ['run','preset','shuffle','array-input'])$(id).disabled=busy;$('preset').disabled=busy||state.assignmentReplay;$('code').readOnly=busy||state.assignmentReplay;$('cancel').hidden=!busy;$('editing-state').textContent=busy?'실행 중':state.assignmentReplay?'읽기 전용':'수정 가능';$('run-text').textContent=busy?'실행 기록 중…':'실행 & 재생';updateControls();}
 function updateControls(){const ready=state.frames.length>1&&!state.busy;$('next-comparison').disabled=!ready||!state.frames.some((f,i)=>i>state.index&&f.kind==='compare');for(const id of ['play','timeline','restart'])$(id).disabled=!ready;$('prev').disabled=!ready||state.index===0;$('next').disabled=!ready||state.index>=state.frames.length-1;$('play').textContent=state.playing?'Ⅱ 일시정지':state.frames.length&&state.index===state.frames.length-1?'↻ 다시 재생':'▶ 재생';}
 function pause(){state.playing=false;clearTimeout(state.timer);updateControls();}
 function renderFrame(index,animate=true){
@@ -539,7 +543,7 @@ $('array-input').addEventListener('input',()=>invalidate());
 $('code').addEventListener('scroll',syncScroll);
 $('code').addEventListener('input',()=>{$('preset').value='custom';invalidate();});
 $('code').addEventListener('keydown',event=>{
- if(state.busy)return;
+ if(state.busy||state.assignmentReplay)return;
  const el=event.target,start=el.selectionStart,end=el.selectionEnd;
  if(event.key==='Tab'){
   event.preventDefault();
@@ -552,6 +556,21 @@ $('code').addEventListener('keydown',event=>{
 });
 window.addEventListener('keydown',event=>{if((event.metaKey||event.ctrlKey)&&event.key==='Enter'){event.preventDefault();if(!state.busy)runCode().catch(()=>{});}});
 window.addEventListener('pagehide',()=>{clearTimeout(state.watchdog);pause();discardWorker();});
+// A same-origin assignment page can replay the exact graded function with
+// its fixed driver. The editor stays read-only throughout playback.
+state.assignmentReplay=window.parent!==window&&new URLSearchParams(location.search).get('assignment-replay')==='1';
+if(state.assignmentReplay){
+ document.body.classList.add('assignment-replay');setBusy(false);$('code-hint').textContent='작성한 함수 + 고정 정렬 코드';
+ window.addEventListener('message',event=>{
+  if(event.source!==window.parent)return;
+  if(location.protocol!=='file:'&&event.origin!==location.origin)return;
+  const data=event.data;
+  if(data?.type!=='sortlab-assignment-replay'||typeof data.code!=='string'||data.code.length>20000||!Array.isArray(data.values)||data.values.length>60||data.values.some(v=>typeof v!=='number'||!Number.isFinite(v)||Math.abs(v)>9999))return;
+  if(state.busy)stopRun();
+  $('code').value=data.code;$('preset').value='custom';$('array-input').value=JSON.stringify(data.values);highlightCode();runCode(false).catch(()=>{});
+ });
+ window.parent.postMessage({type:'sortlab-replay-ready'},location.protocol==='file:'?'*':location.origin);
+}
 // Progressive enhancement for browsers exposing WebMCP.
 if(document.modelContext?.registerTool){
  try{Promise.resolve(document.modelContext.registerTool({name:'run_sort_code',title:'Python 정렬 코드 실행',description:'입력한 Python sort(arr) 코드와 숫자 배열을 실행하고 화면에 실행 기록을 표시합니다. 자동 재생 없이 첫 단계에서 멈춥니다.',inputSchema:{type:'object',properties:{code:{type:'string',maxLength:20000},array:{type:'array',maxItems:60,items:{type:'number',minimum:-9999,maximum:9999}}},required:['code','array'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:true},async execute(input){if(state.busy)throw new Error('이미 실행 중입니다.');if(!input||typeof input.code!=='string'||!input.code.trim()||input.code.length>20000||!Array.isArray(input.array)||input.array.length>60||input.array.some(x=>typeof x!=='number'||!Number.isFinite(x)||Math.abs(x)>9999))throw new Error('코드와 숫자 배열을 확인하세요.');$('code').value=input.code;$('preset').value='custom';$('array-input').value=JSON.stringify(input.array);highlightCode();return await runCode(false);}})).catch(()=>{});}catch{}
