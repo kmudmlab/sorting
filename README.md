@@ -77,4 +77,5 @@ python3 -m http.server 8765 --bind 127.0.0.1
 애니메이션은 같은 폴더의 `index.html`을 사용하므로 두 HTML을 함께 배포하세요.
 최종 제출은 공개 과제 주소에서 이용하세요.
 
-서버 소스는 `server/`에 보관합니다. `server/README.md`에 빌드·배포 방법이 있습니다.
+서버 소스는 비공개 Apps Script 프로젝트와 로컬 작업 폴더에 보관합니다.
+공개 운영 안내는 `server/README.md`에 있습니다.
