@@ -6,6 +6,18 @@
 <title>구현 과제 · Sort Lab</title>
 <style>
 :root{color-scheme:light;--blue:#304ded;--ink:#17233c;--muted:#637087;--line:#e1e6ee;--bg:#f3f5f9;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}button,a,input,textarea,select{font:inherit}button,a,input,textarea,select:focus-visible{outline-offset:3px}button{cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:9px 15px;background:white;color:var(--ink);font-weight:600;min-height:44px;font-size:14px}button:hover{background:#eef1fc}button:disabled{opacity:.45;cursor:not-allowed}button.primary{background:var(--blue);color:white;border-color:var(--blue)}a{color:var(--blue);text-underline-offset:4px}header{background:white;border-bottom:1px solid var(--line);padding:18px 32px;display:flex;align-items:center;gap:28px}.brand{font-size:23px;font-weight:800;text-decoration:none;letter-spacing:-1px}.brand span{color:#8390a4;font-weight:400}nav{display:flex;gap:20px;font-size:14px}nav a[aria-current]{font-weight:700;color:var(--ink)}.runtime{margin-left:auto;color:var(--muted);font-size:13px}main{max-width:1440px;margin:auto;padding:28px 32px 48px}h1{font-size:27px;line-height:1.4;letter-spacing:-.8px;margin:0 0 7px}h2{font-size:17px;margin:0}h3{font-size:16px;margin:0 0 8px}p{margin:0}.intro{color:var(--muted)}.tabs{display:flex;gap:8px;margin:24px 0 18px;flex-wrap:wrap}.tabs button[aria-pressed=true]{background:var(--blue);color:white;border-color:var(--blue)}.workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}.panel{border:1px solid var(--line);border-radius:13px;background:white;overflow:hidden}.panel-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;justify-content:space-between}.tag{font-size:13px;color:var(--muted)}.editor-panel{background:#141d30;border-color:#26334c;color:#e5ecff}.editor-panel .panel-head{border-color:#34415a;background:#1b263b}.editor-panel .tag{color:#a7b7d3}.signature{margin:0;padding:15px 20px 8px;color:#c8a4ff;font:14px/1.7 var(--mono);overflow:auto}.editor-label{display:block;font-size:13px;color:#96a6c1;padding:0 20px 7px}#body-code{display:block;width:100%;min-height:300px;resize:vertical;padding:12px 20px;border:0;border-top:1px solid #263147;border-bottom:1px solid #263147;background:#141d30;color:#e5ecff;tab-size:4;font:14px/1.7 var(--mono);white-space:pre;overflow:auto}#body-code:focus{outline:2px solid #7b91ff;outline-offset:-2px}.editor-footer{padding:12px 20px;color:#a8b7cf;font-size:13px;display:flex;justify-content:space-between;gap:12px}.actions{background:white;color:var(--ink);padding:17px 20px;display:flex;gap:9px;flex-wrap:wrap}.actions .primary{flex:1}.right{display:grid;gap:16px}.contract{padding:18px 20px;font-size:15px}.contract ul{padding-left:20px;margin:9px 0}.contract code,.criteria code{font-family:var(--mono);font-size:.9em;color:#435583}.locked{margin:0;padding:17px 20px;max-height:335px;overflow:auto;background:#f8faff;color:#445471;font:14px/1.65 var(--mono)}.criteria{margin-top:20px;padding:17px 20px;font-size:14px;color:var(--muted)}.criteria summary{font-weight:600;cursor:pointer;color:var(--ink)}.criteria p{margin:12px 0 6px}.criteria ul{padding-left:20px;margin:7px 0}.notice{margin:18px 0 0;padding:12px 16px;border-radius:8px;background:#eef2ff;color:#40528f;font-size:14px;white-space:pre-wrap}.notice.error{background:#fff0ef;color:#a34640}.results{margin-top:20px}.results .panel-head{align-items:baseline}.score{font:700 32px var(--mono);color:var(--blue)}.score small{font:14px sans-serif;color:var(--muted)}.score-grid{padding:18px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.category{border:1px solid var(--line);border-radius:9px;padding:14px}.category strong{display:block;font-size:21px;color:var(--ink)}.category span{font-size:14px;color:var(--muted)}.table-wrap{overflow-x:auto;padding:0 20px 18px}table{border-collapse:collapse;width:100%;font-size:14px;text-align:left}th,td{padding:9px 10px;border-bottom:1px solid var(--line)}th{background:#f7f9fd;color:#53647c;font-weight:600}.pass{color:#16755e}.fail{color:#b34a3d}.complex-note{font-size:14px;color:var(--muted);padding:0 20px 14px}.failures{padding:0 20px 18px}.failure{border:1px solid #ecd8d4;background:#fffafa;border-radius:8px;margin-top:10px;padding:12px 14px;font-size:14px}.failure summary{cursor:pointer;color:#9b4d40;font-weight:600}.failure pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 var(--mono);margin:10px 0}.submission{padding:18px 20px;border-top:1px solid var(--line);background:#fafbff}.submission p{font-size:14px;color:var(--muted);margin:7px 0 13px}.button-row{display:flex;gap:9px;flex-wrap:wrap}#report-copy{width:100%;min-height:160px;font:13px/1.5 var(--mono);margin-top:12px;padding:10px;border:1px solid var(--line);border-radius:7px}.preview{margin-top:20px}.preview-controls{padding:16px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.preview-controls label{font-size:14px;font-weight:600}.preview-controls input{flex:1;min-width:190px;border:1px solid var(--line);border-radius:7px;padding:10px;font:14px var(--mono)}iframe{width:100%;height:1040px;border:0;border-top:1px solid var(--line);display:block;background:var(--bg)}footer{margin-top:22px;color:var(--muted);font-size:13px}.stale{color:#a75b15;font-size:14px}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #8098ff}@media(max-width:850px){.workspace{grid-template-columns:1fr}.score-grid{grid-template-columns:1fr}.locked{max-height:260px}.runtime{display:none}header{padding:16px 20px;gap:20px}main{padding:22px 16px 40px}h1{font-size:24px}}@media(max-width:450px){nav{gap:12px}.brand{font-size:21px}.tabs{gap:6px}.tabs button{padding:8px 10px;font-size:13px}.editor-footer{flex-wrap:wrap}.panel-head{padding:14px 16px}.signature{font-size:13px}#body-code{font-size:13px}.score{font-size:27px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* One source view keeps the fixed scaffold next to the editable function. */
+.workspace{grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr)}
+.editor-panel>.editor-label{padding:12px 20px;margin:0;border-bottom:1px solid #34415a}
+.source-editor{max-height:820px;overflow:auto;padding:16px 0}
+.fixed-source{margin:0;padding:0 20px;color:#a7b7d3;font:14px/1.7 var(--mono);white-space:pre;overflow-x:auto}
+.editable-source{margin:18px 0;background:#19263d;border-left:3px solid #8098ff}
+.editable-source .editor-label{padding:10px 17px 0;color:#bac9fb;font-size:12px}
+.editable-source .signature{padding:6px 17px 0}
+#body-code{background:transparent;padding:0 17px 12px;border:0;min-height:125px;resize:none;overflow-y:hidden}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.right{grid-row:1}.source-editor{max-height:none}}
+.student-fields{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 16px}.student-fields label{font-size:14px;font-weight:600;display:grid;gap:5px}.student-fields input{border:1px solid var(--line);border-radius:6px;padding:9px 12px;width:220px;max-width:100%}#submission-status{white-space:pre-wrap}.submit-bridge{position:fixed;left:-10px;top:-10px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -14,14 +26,14 @@
 <h1>핵심 함수를 완성해 보세요.</h1><p class="intro">고정된 정렬 코드와 함께 실행합니다. 채점 횟수 제한 없이 수정하고 다시 도전할 수 있습니다.</p>
 <div class="tabs" aria-label="과제 선택"><button data-kind="partition" aria-pressed="true">01 퀵 정렬</button><button data-kind="merge" aria-pressed="false">02 병합 정렬</button><button data-kind="siftdown" aria-pressed="false">03 힙 정렬</button></div>
 <div class="workspace">
-  <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><pre id="signature" class="signature"></pre><label class="editor-label" for="body-code">아래 본문을 들여쓰기 4칸부터 작성하세요.</label><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
-  <div class="right"><section class="panel"><div class="panel-head"><h2>구현할 동작</h2><span class="tag" id="complexity-target"></span></div><div id="contract" class="contract"></div></section><section class="panel"><div class="panel-head"><h2>함께 실행되는 코드</h2><span class="tag">수정 불가</span></div><pre id="locked-code" class="locked" aria-label="수정할 수 없는 정렬 코드"></pre></section></div>
+  <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><p class="editor-label">전체 코드입니다. 강조된 함수 본문만 수정할 수 있습니다.</p><div class="source-editor"><pre id="locked-before" class="fixed-source" aria-label="고정된 정렬 함수 · 수정 불가"></pre><div class="editable-source"><label class="editor-label" for="body-code">이 함수의 본문을 구현하세요 · 들여쓰기 4칸</label><pre id="signature" class="signature"></pre><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea></div><pre id="locked-after" class="fixed-source" aria-label="고정된 진입 함수 · 수정 불가"></pre></div><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
+  <div class="right"><section class="panel"><div class="panel-head"><h2>구현할 동작</h2><span class="tag" id="complexity-target"></span></div><div id="contract" class="contract"></div></section></div>
 </div>
-<details class="panel criteria"><summary>채점 기준 · 지원하는 Python 문법</summary><p><strong>함수 단독 정확성 40점 + 전체 정렬 정확성 40점 + 연산 수 기준 20점</strong>으로 채점합니다. 전체 정렬은 위의 고정 코드를 사용합니다. 함수가 빠르게 끝나더라도 결과가 틀리면 연산 수 점수를 받을 수 없습니다.</p><p>연산 수 검사는 n = 64, 128, 256, 512, 1024에서 진행합니다. 같은 크기의 여러 입력 중 가장 큰 연산 수를 표시합니다. 기준을 넘으면 해당 검사를 중단하므로 실패한 경우의 수치는 중단 시점까지의 연산 수입니다.</p><ul><li>partition / merge: <code>100n + 160</code>회 이하. n은 처리 구간의 길이입니다.</li><li>siftdown: <code>120⌈log₂(n + 1)⌉ + 120</code>회 이하. n은 size입니다. 루트와 내부 노드, 말단 노드에서 검사합니다.</li><li>문장·식 평가, 반복 진행, 대입·배열 접근을 셉니다. 슬라이스, 배열 복사·반복·연결, min/max의 비용도 원소 수만큼 더합니다. 고정 코드 자체의 연산은 제외합니다.</li><li>이 결과는 유한한 입력에서 공개된 연산 예산을 충족했는지 보여줍니다. 모든 입력에 대한 점근적 시간복잡도의 증명은 아닙니다.</li></ul><p>지원: 대입·교환, if/elif/else, for/while, break/continue, return, 기본 산술·비교, 리스트·튜플·인덱스·슬라이스, <code>len, range, min, max, abs, list, append</code>, 자기 재귀. import, 내장 정렬, 별도 함수·클래스 정의, 컴프리헨션은 사용할 수 없습니다. 배열 길이는 유지하세요. 재귀 깊이는 최대 100입니다.</p><p>문법과 코드를 제한한 실행기가 학생 함수를 평가합니다. 배열 원소는 숫자를 사용하며 보조 배열에는 임시로 None을 넣을 수 있습니다. 작성한 코드는 이 브라우저에 저장되며, 제출 폼을 제출해야 제출 기록이 남습니다.</p></details>
+<details class="panel criteria"><summary>채점 기준 · 지원하는 Python 문법</summary><p><strong>함수 단독 정확성 40점 + 전체 정렬 정확성 40점 + 연산 수 기준 20점</strong>으로 채점합니다. 전체 정렬은 위의 고정 코드를 사용합니다. 함수가 빠르게 끝나더라도 결과가 틀리면 연산 수 점수를 받을 수 없습니다.</p><p>연산 수 검사는 n = 64, 128, 256, 512, 1024에서 진행합니다. 같은 크기의 여러 입력 중 가장 큰 연산 수를 표시합니다. 기준을 넘으면 해당 검사를 중단하므로 실패한 경우의 수치는 중단 시점까지의 연산 수입니다.</p><ul><li>partition / merge: <code>100n + 160</code>회 이하. n은 처리 구간의 길이입니다.</li><li>siftdown: <code>120⌈log₂(n + 1)⌉ + 120</code>회 이하. n은 size입니다. 루트와 내부 노드, 말단 노드에서 검사합니다.</li><li>문장·식 평가, 반복 진행, 대입·배열 접근을 셉니다. 슬라이스, 배열 복사·반복·연결, min/max의 비용도 원소 수만큼 더합니다. 고정 코드 자체의 연산은 제외합니다.</li><li>이 결과는 유한한 입력에서 공개된 연산 예산을 충족했는지 보여줍니다. 모든 입력에 대한 점근적 시간복잡도의 증명은 아닙니다.</li></ul><p>지원: 대입·교환, if/elif/else, for/while, break/continue, return, 기본 산술·비교, 리스트·튜플·인덱스·슬라이스, <code>len, range, min, max, abs, list, append</code>, 자기 재귀. import, 내장 정렬, 별도 함수·클래스 정의, 컴프리헨션은 사용할 수 없습니다. 배열 길이는 유지하세요. 재귀 깊이는 최대 100입니다.</p><p>문법과 코드를 제한한 실행기가 학생 함수를 평가합니다. 배열 원소는 숫자를 사용하며 보조 배열에는 임시로 None을 넣을 수 있습니다. 작성한 코드는 이 브라우저에 저장되며, 아래 제출 버튼을 눌러야 제출 기록이 남습니다.</p></details>
 <div id="notice" class="notice" role="status" hidden></div>
-<section id="results" class="panel results" hidden aria-label="채점 결과"><div class="panel-head"><h2>채점 결과 <span id="stale" class="stale" hidden>코드가 변경됨 · 다시 채점하세요</span></h2><span class="score"><span id="score">0</span><small> / 100</small></span></div><div id="categories" class="score-grid"></div><p class="complex-note" id="complex-note"></p><div class="table-wrap"><table><caption class="tag">입력 크기별 학생 함수 연산 수</caption><thead><tr><th scope="col">n</th><th scope="col">최대 연산 수</th><th scope="col">허용 연산 수</th><th scope="col">정확성 + 예산</th></tr></thead><tbody id="measurements"></tbody></table></div><div id="failures" class="failures"></div><div class="submission"><h3>제출 기록 남기기</h3><p id="submission-help">채점 결과와 제출 코드를 구글 폼으로 보냅니다. 폼에서 학번·이름을 입력하고 제출을 완료하세요. 이 화면의 채점만으로는 제출되지 않습니다.</p><div class="button-row"><button id="submit" class="primary" disabled>구글 폼으로 제출</button><button id="copy" disabled>제출 내용 복사</button></div><p id="form-fallback" hidden><span id="form-hint"></span> <a id="form-link" target="_blank" rel="noopener">구글 폼 열기</a></p><textarea id="report-copy" readonly hidden aria-label="복사할 제출 코드와 채점 결과"></textarea></div></section>
+<section id="results" class="panel results" hidden aria-label="채점 결과"><div class="panel-head"><h2><span id="result-kind">연습 채점 결과</span> <span id="stale" class="stale" hidden>코드가 변경됨 · 다시 채점하세요</span></h2><span class="score"><span id="score">0</span><small> / 100</small></span></div><div id="categories" class="score-grid"></div><p class="complex-note" id="complex-note"></p><div class="table-wrap"><table><caption class="tag">입력 크기별 학생 함수 연산 수</caption><thead><tr><th scope="col">n</th><th scope="col">최대 연산 수</th><th scope="col">허용 연산 수</th><th scope="col">정확성 + 예산</th></tr></thead><tbody id="measurements"></tbody></table></div><div id="failures" class="failures"></div><div class="submission"><h3>과제 제출</h3><p id="submission-help">학번과 이름을 입력하고 제출하세요. 서버가 코드를 다시 채점하여 기록합니다.</p><div class="student-fields"><label for="student-id">학번<input id="student-id" autocomplete="off" maxlength="24" placeholder="학번" required></label><label for="student-name">이름<input id="student-name" autocomplete="name" maxlength="60" placeholder="이름" required></label></div><div class="button-row"><button id="submit" class="primary" disabled>과제 제출</button></div><p id="submission-status" role="status" hidden></p></div></section>
 <section id="preview" class="panel preview" hidden><div class="panel-head"><h2>작성한 코드로 전체 정렬 살펴보기</h2><span class="tag">고정 코드 + 내 함수</span></div><div class="preview-controls"><label for="preview-array">입력 배열</label><input id="preview-array" value="38, 15, 62, 27, 48, 9, 55, 21" aria-label="시각화할 배열"><button id="replay">실행 기록 만들기</button></div><div id="iframe-mount"></div></section>
-<footer>과제의 점수는 브라우저에서 계산합니다. 구글 폼은 코드와 채점 결과의 제출 기록을 보관하며, 서버에서 코드를 다시 채점하지는 않습니다.</footer>
+<footer>연습 채점은 브라우저에서 진행합니다. 최종 제출 시 서버가 코드를 다시 채점하고, 저장이 확인되면 접수 번호와 제출 점수를 표시합니다. 코드를 수정하여 계속 재제출할 수 있습니다.</footer>
 </main>
 <script id="assignment-engine" type="text/plain">
 """Deterministic, metered interpreter for the three sorting exercises.
@@ -507,7 +519,7 @@ self.onmessage=async ({data})=>{
 <script>
 'use strict';
 const TASKS={"partition": {"title": "퀵 정렬 · partition", "args": ["arr", "l", "r"], "signature": "def partition(arr, l, r):", "complexity": "O(n)", "driver": "def quicksort(arr, l, r):\n    if l + 1 >= r: return\n    p = partition(arr, l, r)\n    quicksort(arr, l, p)\n    quicksort(arr, p+1, r)\n\ndef sort(arr):\n    quicksort(arr, 0, len(arr))"}, "merge": {"title": "병합 정렬 · merge", "args": ["arr", "l", "m", "r"], "signature": "def merge(arr, l, m, r):", "complexity": "O(n)", "driver": "def mergesort(arr, l, r):\n    if l + 1 >= r: return\n    m = (l + r) // 2\n    mergesort(arr, l, m)\n    mergesort(arr, m, r)\n    merge(arr, l, m, r)\n\ndef sort(arr):\n    mergesort(arr, 0, len(arr))"}, "siftdown": {"title": "힙 정렬 · siftdown", "args": ["arr", "root", "size"], "signature": "def siftdown(arr, root, size):", "complexity": "O(log n)", "driver": "def heapsort(arr):\n    size = len(arr)\n    for root in range(size // 2 - 1, -1, -1):\n        siftdown(arr, root, size)\n    for end in range(size - 1, 0, -1):\n        arr[0], arr[end] = arr[end], arr[0]\n        siftdown(arr, 0, end)\n\ndef sort(arr):\n    heapsort(arr)"}};
-const FORM={"url": "https://docs.google.com/forms/d/e/1FAIpQLScdhacSgfS5TWSAbpkXHmx_O6YizcThkVh6dI44jZg_yOOf0g/viewform", "assignmentField": "entry.980709488", "scoreField": "entry.719892951", "reportField": "entry.922281769"};
+const SUBMISSION={"url": "https://script.google.com/macros/s/AKfycbxxnwsAsmuX5HV5x5HelRiHqvAEYiFuoMM9Jj5iJtUuiEzxniq6lvpR3tdae9xdUDL0Bw/exec"};
 const $=id=>document.getElementById(id);
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const CONTRACTS={
@@ -519,34 +531,36 @@ const STARTERS={partition:'    # 마지막 원소를 피벗으로 분할하고 �
 const SOURCES=['https://cdn.jsdelivr.net/pyodide/v0.27.7/full/','https://unpkg.com/pyodide@0.27.7/'];
 const app={kind:'partition',drafts:{},busy:false,worker:null,workerURL:null,ready:false,source:0,generation:0,result:null,gradedBody:null,gradedKind:null,report:null,frame:null,pendingReplay:null};
 function notice(message,error=false){$('notice').hidden=!message;$('notice').textContent=message;$('notice').className='notice'+(error?' error':'');}
+function fitBody(){const editor=$('body-code');editor.style.height='auto';editor.style.height=Math.max(125,editor.scrollHeight)+'px';}
 function saveDraft(){app.drafts[app.kind]=$('body-code').value;try{localStorage.setItem('sortlab.assignment.'+app.kind,$('body-code').value);$('draft-status').textContent='이 브라우저에 저장됨';}catch{$('draft-status').textContent='현재 탭에서만 유지';}}
 function selectTask(kind){
- if(app.busy)return; if(app.kind)saveDraft(); app.kind=kind;
+ if(app.busy||app.submitting)return; if(app.kind)saveDraft(); app.kind=kind;
  if(!(kind in app.drafts)){try{app.drafts[kind]=localStorage.getItem('sortlab.assignment.'+kind)||STARTERS[kind];}catch{app.drafts[kind]=STARTERS[kind];}}
- $('body-code').value=app.drafts[kind];$('signature').textContent=TASKS[kind].signature;$('task-title').textContent=kind+' 구현';$('complexity-target').textContent=TASKS[kind].complexity+' 목표';$('contract').innerHTML=CONTRACTS[kind];$('locked-code').textContent=TASKS[kind].driver;
+ $('body-code').value=app.drafts[kind];$('signature').textContent=TASKS[kind].signature;$('task-title').textContent=kind+' 구현';$('complexity-target').textContent=TASKS[kind].complexity+' 목표';$('contract').innerHTML=CONTRACTS[kind];const [fixed,entry]=TASKS[kind].driver.split('\ndef sort(arr):');$('locked-before').textContent=fixed.trimEnd();$('locked-after').textContent='def sort(arr):'+entry;fitBody();
  document.querySelectorAll('[data-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===kind)));
  app.result=null;app.gradedBody=null;app.report=null;$('results').hidden=true;$('preview').hidden=true;if(app.frame){app.frame.remove();app.frame=null;}app.pendingReplay=null;notice('');updateButtons();
  history.replaceState(null,'','#'+kind);
 }
 function fresh(){return app.result&&app.gradedKind===app.kind&&app.gradedBody===$('body-code').value;}
-function updateButtons(){const valid=fresh()&&!app.result.error&&!app.busy;$('grade').disabled=app.busy;$('cancel').hidden=!app.busy;$('body-code').readOnly=app.busy;document.querySelectorAll('[data-kind]').forEach(b=>b.disabled=app.busy);$('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=!valid||!FORM.url;$('copy').disabled=!valid;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'채점하기';}
+function updateButtons(){const locked=app.busy||app.submitting;const valid=fresh()&&!app.result.error&&!locked;$('grade').disabled=locked;$('cancel').hidden=!app.busy;$('body-code').readOnly=locked;document.querySelectorAll('[data-kind]').forEach(b=>b.disabled=locked);$('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=!valid||!SUBMISSION.url||app.recordedKey===submissionKey();$('submit').textContent=app.submitting?'제출 중…':app.recordedKey===submissionKey()?'제출 완료':'과제 제출';$('student-id').disabled=locked;$('student-name').disabled=locked;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'채점하기';}
 function discard(){if(app.worker)app.worker.terminate();if(app.workerURL)URL.revokeObjectURL(app.workerURL);app.worker=null;app.workerURL=null;app.ready=false;clearTimeout(app.timer);}
 function stop(){app.generation++;discard();app.busy=false;app.result=null;app.report=null;$('results').hidden=true;$('runtime').textContent='채점 중단';notice('채점을 중단했습니다. 코드를 수정하고 다시 시도할 수 있습니다.');updateButtons();}
-function renderResult(result,body,kind){
- $('form-fallback').hidden=true;
+function renderResult(result,body,kind,official=false){
+ $('result-kind').textContent=official?'서버 채점 · 제출 결과':'연습 채점 결과';
+ $('submission-status').hidden=true;
  app.result=result;app.gradedBody=body;app.gradedKind=kind;$('results').hidden=false;$('score').textContent=result.score;
  $('categories').innerHTML=(result.groups||[]).map(g=>`<div class="category"><h3>${esc(g.name)}</h3><strong>${g.points} / ${g.max}</strong><span>${g.passed} / ${g.total} 검사 통과</span></div>`).join('');
  $('complex-note').textContent=TASKS[kind].complexity+' 목표에 대한 연산 예산 검사입니다. 슬라이스·복사 비용도 포함하며, 시간복잡도를 증명하는 검사는 아닙니다.';
  $('measurements').innerHTML=(result.complexity||[]).map(row=>`<tr><td>${row.n}</td><td>${row.ops.toLocaleString()}</td><td>${row.limit.toLocaleString()}</td><td class="${row.passed?'pass':'fail'}">${row.passed?'통과':'미충족'}</td></tr>${row.message?`<tr><td colspan="4" class="fail">${esc(row.message)}</td></tr>`:''}`).join('');
  $('failures').innerHTML=(result.failures||[]).map((f,i)=>`<details class="failure"${i===0?' open':''}><summary>${esc(f.group)} · 실패 사례 ${i+1}</summary><p>${esc(f.message)}</p><pre>입력: ${esc(JSON.stringify(f.input))}\n${f.full?'전체 sort(arr) 실행':'인수: '+esc(JSON.stringify(f.params))}\n실제 배열: ${esc(JSON.stringify(f.actual))}${f.returned!==null?'\n반환값: '+esc(JSON.stringify(f.returned)):''}</pre>${f.full?`<button data-failure="${i}">이 입력으로 시각화</button>`:''}</details>`).join('');
  const now=new Date().toISOString();
- app.report=JSON.stringify({service:'Sort Lab',assignment:kind,gradingVersion:result.version,gradedAt:now,score:result.score,groups:result.groups,measurements:result.complexity,code:TASKS[kind].signature+'\n'+body,gradingLocation:'student-browser'},null,2);
- $('report-copy').hidden=true;$('report-copy').value=app.report;
- $('submission-help').textContent=FORM.url?'구글 폼에서 학번·이름을 입력하고 제출을 완료하세요. 채점 결과와 정확히 같은 코드가 함께 전달됩니다. 재제출할 수 있습니다.':'제출 폼을 연결하고 있습니다. 지금은 채점과 제출 내용 복사를 이용할 수 있습니다.';
- notice(result.error|| (result.score===100?'100점입니다. 구글 폼에서 제출을 완료하면 기록이 남습니다.':'실패 사례와 연산 수를 확인하고 수정해 보세요. 다시 채점해도 감점되지 않습니다.'),Boolean(result.error));updateButtons();
+ if(!official)app.report=JSON.stringify({service:'Sort Lab',assignment:kind,gradingVersion:result.version,gradedAt:now,score:result.score,groups:result.groups,measurements:result.complexity,code:TASKS[kind].signature+'\n'+body,gradingLocation:'student-browser'},null,2);
+ $('submission-help').textContent=SUBMISSION.url?'학번·이름을 확인하고 제출하세요. 서버에서 이 코드를 다시 채점하고 결과를 자동 기록합니다.':'자동 제출 기능을 연결하고 있습니다. 채점과 코드 작성은 이용할 수 있습니다.';
+ if(!official)notice(result.error|| (result.score===100?'100점입니다. 아래 과제 제출 버튼을 누르면 기록이 남습니다.':'실패 사례와 연산 수를 확인하고 수정해 보세요. 다시 채점해도 감점되지 않습니다.'),Boolean(result.error));updateButtons();
+ if(SUBMISSION.url)ensureBridge().catch(()=>{});
 }
 function grade(){
- if(app.busy)return; const body=$('body-code').value,kind=app.kind;if(!body.trim()||body.length>12000){notice('함수 본문을 12,000자 이내로 작성하세요.',true);return;}
+ if(app.busy||app.submitting)return; const body=$('body-code').value,kind=app.kind;if(!body.trim()||body.length>12000){notice('함수 본문을 12,000자 이내로 작성하세요.',true);return;}
  saveDraft();app.busy=true;app.result=null;app.report=null;$('results').hidden=true;$('preview').hidden=true;updateButtons();notice(app.ready?'학생 함수를 채점하고 있습니다.':'Python을 불러오고 있습니다. 첫 실행은 잠시 걸릴 수 있습니다.');
  const generation=++app.generation,attempted=new Set();let phase=app.ready?'execute':'load';
  const active=()=>generation===app.generation&&app.busy;
@@ -572,29 +586,60 @@ function preview(){
 }
 function sendReplay(){if(app.frame&&app.pendingReplay)app.frame.contentWindow.postMessage(app.pendingReplay,location.protocol==='file:'?'*':location.origin);}
 window.addEventListener('message',event=>{if(event.source!==app.frame?.contentWindow)return;if(location.protocol!=='file:'&&event.origin!==location.origin)return;if(event.data?.type==='sortlab-replay-ready')sendReplay();});
-async function copyReport(){if(!fresh()||!app.report)return false;try{await navigator.clipboard.writeText(app.report);notice('제출 코드와 채점 결과를 복사했습니다.');return true;}catch{$('report-copy').hidden=false;$('report-copy').focus();$('report-copy').select();notice('아래 제출 내용을 복사해 구글 폼에 붙여 넣으세요.');return false;}}
-async function submit(){
- if(!fresh()||app.result.error||!FORM.url)return;
- const url=new URL(FORM.url);url.searchParams.set('usp','pp_url');
- if(FORM.assignmentField)url.searchParams.set(FORM.assignmentField,app.kind);
- if(FORM.scoreField)url.searchParams.set(FORM.scoreField,String(app.result.score));
- const shortURL=url.href;
- if(FORM.reportField)url.searchParams.set(FORM.reportField,app.report);
- if(url.href.length>7500){
-  $('form-hint').textContent='제출 내용을 복사한 뒤 폼의 보고서 칸에 붙여 넣으세요.';$('form-link').href=shortURL;$('form-fallback').hidden=false;$('report-copy').hidden=false;
-  await copyReport();
-  notice('코드가 길어 자동 입력을 생략합니다. 제출 내용을 복사한 뒤 아래 “구글 폼 열기”를 눌러 “제출 코드 및 채점 결과”에 붙여 넣으세요.');
- }else{
-  $('form-hint').textContent='새 탭이 열리지 않았나요? 자동으로 채워진 폼을 여기에서 열 수 있습니다.';$('form-link').href=url.href;$('form-fallback').hidden=false;
-  window.open(url.href,'_blank','noopener');
-  notice('구글 폼에서 학번·이름을 입력하고 제출 버튼을 눌러야 기록됩니다. 새 탭이 열리지 않으면 아래 “구글 폼 열기”를 누르세요.');
- }
+function submissionKey(){return app.report?app.report+'|'+$('student-id').value.trim()+'|'+$('student-name').value.trim():null;}
+let bridgeWindow=null,bridgeOrigin=null,bridgePromise=null,bridgeFrame=null,bridgeChannel=null,bridgeResolve=null,bridgeReject=null,bridgeTimer=null,pendingSave=null;
+function ensureBridge(){
+ if(bridgeWindow)return Promise.resolve();if(bridgePromise)return bridgePromise;
+ bridgeChannel=crypto.randomUUID();
+ bridgePromise=new Promise((resolve,reject)=>{bridgeResolve=resolve;bridgeReject=reject;});
+ const url=new URL(SUBMISSION.url);url.searchParams.set('channel',bridgeChannel);url.searchParams.set('origin',location.origin);
+ bridgeFrame=document.createElement('iframe');bridgeFrame.className='submit-bridge';bridgeFrame.title='과제 자동 제출 연결';bridgeFrame.setAttribute('aria-hidden','true');bridgeFrame.tabIndex=-1;bridgeFrame.src=url.href;document.body.append(bridgeFrame);
+ bridgeTimer=setTimeout(()=>{bridgeFrame?.remove();bridgeFrame=null;bridgeWindow=null;bridgePromise=null;bridgeReject?.(new Error('제출 서버에 연결하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 제출하세요.'));},30000);
+ return bridgePromise;
 }
-$('grade').addEventListener('click',grade);$('cancel').addEventListener('click',stop);$('preview-button').addEventListener('click',preview);$('replay').addEventListener('click',preview);$('copy').addEventListener('click',copyReport);$('submit').addEventListener('click',submit);
+window.addEventListener('message',event=>{
+ const data=event.data;if(!data||data.channel!==bridgeChannel)return;
+ let origin;try{origin=new URL(event.origin);}catch{return;}
+ if(origin.protocol!=='https:'||!(origin.hostname==='script.google.com'||origin.hostname==='script.googleusercontent.com'||origin.hostname.endsWith('-script.googleusercontent.com')))return;
+ if(data.type==='sortlab-submit-ready'&&!bridgeWindow){bridgeWindow=event.source;bridgeOrigin=event.origin;clearTimeout(bridgeTimer);bridgeResolve?.();return;}
+ if(event.source!==bridgeWindow||!pendingSave||data.requestId!==pendingSave.requestId)return;
+ if(data.type==='sortlab-submit-result'){
+  if(!data.receipt||data.receipt.requestId!==pendingSave.requestId||typeof data.receipt.responseId!=='string'||!data.receipt.responseId)return;
+  clearTimeout(pendingSave.timer);pendingSave.resolve(data.receipt);pendingSave=null;
+ }else if(data.type==='sortlab-submit-error'){
+  clearTimeout(pendingSave.timer);pendingSave.reject(new Error(String(data.message||'제출 실패')));pendingSave=null;
+ }
+});
+function saveSubmission(payload){return new Promise((resolve,reject)=>{
+ const timer=setTimeout(()=>{pendingSave=null;reject(new Error('저장 응답을 확인하지 못했습니다. 다시 제출하여 접수 결과를 확인하세요.'));},45000);
+ pendingSave={resolve,reject,timer,requestId:payload.requestId};
+ bridgeWindow.postMessage({type:'sortlab-submit',channel:bridgeChannel,payload},bridgeOrigin);
+});}
+async function submit(){
+ if(!fresh()||app.result.error||!SUBMISSION.url||app.submitting)return;
+ const studentId=$('student-id').value.trim(),studentName=$('student-name').value.trim();
+ if(!/^[A-Za-z0-9-]{4,24}$/.test(studentId)){notice('학번을 입력하세요. 영문·숫자·하이픈 4~24자입니다.',true);$('student-id').focus();return;}
+ if(!studentName||studentName.length>60||/^[=+@-]/.test(studentName)){notice('이름을 확인하세요.',true);$('student-name').focus();return;}
+ const key=submissionKey();if(app.recordedKey===key)return;
+ if(!app.attempt||app.attempt.key!==key)app.attempt={key,payload:{requestId:crypto.randomUUID(),studentId,studentName,report:JSON.parse(app.report)}};
+ app.submitting=true;updateButtons();$('submission-status').hidden=false;$('submission-status').textContent='서버에서 코드를 다시 채점하고 저장하고 있습니다…';
+ try{
+  await ensureBridge();const receipt=await saveSubmission(app.attempt.payload);
+  if(!receipt.result||receipt.result.kind!==app.kind||receipt.result.score!==receipt.score)throw new Error('서버 채점 결과를 확인하지 못했습니다.');
+  renderResult(receipt.result,app.gradedBody,app.kind,true);
+  app.recordedKey=key;
+  $('submission-status').hidden=false;
+  $('submission-status').textContent='제출 완료 · '+TASKS[app.kind].title+' · 서버 채점 '+receipt.score+'점\n'+new Date(receipt.submittedAt).toLocaleString('ko-KR')+' · 접수 번호 '+receipt.requestId;
+  notice('제출이 기록되었습니다. 수정 후 다시 채점하여 재제출할 수 있습니다.');
+ }catch(error){$('submission-status').textContent='제출을 확인하지 못했습니다. '+error.message;notice(error.message,true);}
+ finally{app.submitting=false;updateButtons();}
+}
+['student-id','student-name'].forEach(id=>$(id).addEventListener('input',()=>{updateButtons();$('submission-status').hidden=true;}));
+$('grade').addEventListener('click',grade);$('cancel').addEventListener('click',stop);$('preview-button').addEventListener('click',preview);$('replay').addEventListener('click',preview);$('submit').addEventListener('click',submit);
 document.querySelectorAll('[data-kind]').forEach(b=>b.addEventListener('click',()=>selectTask(b.dataset.kind)));
 $('failures').addEventListener('click',event=>{const button=event.target.closest('[data-failure]');if(button&&fresh()){const failure=app.result.failures[Number(button.dataset.failure)];$('preview-array').value=JSON.stringify(failure.input);preview();}});
-$('body-code').addEventListener('input',()=>{saveDraft();updateButtons();if(app.result)notice('코드가 변경되었습니다. 제출하려면 다시 채점하세요.');$('report-copy').hidden=true;$('form-fallback').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
-$('body-code').addEventListener('keydown',event=>{if(app.busy)return;const el=event.target,start=el.selectionStart,end=el.selectionEnd;if(event.key==='Tab'){event.preventDefault();if(start===end&&!event.shiftKey)el.setRangeText('    ',start,end,'end');else{const begin=el.value.lastIndexOf('\n',start-1)+1;el.setRangeText(el.value.slice(begin,end).split('\n').map(line=>event.shiftKey?line.replace(/^ {1,4}/,''):'    '+line).join('\n'),begin,end,'select');}el.dispatchEvent(new Event('input'));}else if(event.key==='Enter'&&!event.ctrlKey&&!event.metaKey){event.preventDefault();const line=el.value.slice(0,start).split('\n').pop();el.setRangeText('\n'+line.match(/^ */)[0]+(line.trimEnd().endsWith(':')?'    ':''),start,end,'end');el.dispatchEvent(new Event('input'));}});
+$('body-code').addEventListener('input',()=>{fitBody();saveDraft();updateButtons();if(app.result)notice('코드가 변경되었습니다. 제출하려면 다시 채점하세요.');$('submission-status').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
+$('body-code').addEventListener('keydown',event=>{if(app.busy||app.submitting)return;const el=event.target,start=el.selectionStart,end=el.selectionEnd;if(event.key==='Tab'){event.preventDefault();if(start===end&&!event.shiftKey)el.setRangeText('    ',start,end,'end');else{const begin=el.value.lastIndexOf('\n',start-1)+1;el.setRangeText(el.value.slice(begin,end).split('\n').map(line=>event.shiftKey?line.replace(/^ {1,4}/,''):'    '+line).join('\n'),begin,end,'select');}el.dispatchEvent(new Event('input'));}else if(event.key==='Enter'&&!event.ctrlKey&&!event.metaKey){event.preventDefault();const line=el.value.slice(0,start).split('\n').pop();el.setRangeText('\n'+line.match(/^ */)[0]+(line.trimEnd().endsWith(':')?'    ':''),start,end,'end');el.dispatchEvent(new Event('input'));}});
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();grade();}});window.addEventListener('pagehide',discard);
 app.kind=null;selectTask(TASKS[location.hash.slice(1)]?location.hash.slice(1):'partition');
 </script>
