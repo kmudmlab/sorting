@@ -29,6 +29,7 @@
 @media(forced-colors:active){.code-highlight{display:none}#body-code{color:CanvasText;-webkit-text-fill-color:CanvasText;caret-color:CanvasText}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.right{grid-row:1}.source-editor{max-height:none}}
 .batch-submission{margin-top:20px}.batch-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px 20px}.batch-item{border:1px solid var(--line);border-radius:9px;padding:14px;display:grid;gap:7px}.batch-item strong{font-size:15px}.batch-item span{font-size:14px;color:var(--muted)}.batch-item button{justify-self:start;padding:4px 10px}.batch-item.ready{border-color:#a6d6c7;background:#f5fcf9}.batch-item .pass{color:#16755e}.batch-item .stale{color:#a75b15}@media(max-width:650px){.batch-summary{grid-template-columns:1fr}}
+.history-shortcut{margin-top:14px}.submission-history{margin-top:20px;scroll-margin-top:20px}.history-body{padding:18px 20px}.history-body>p{font-size:14px;color:var(--muted)}.student-fields .receipt-field input{width:390px;max-width:100%;font-family:var(--mono)}.receipt-field{max-width:100%}.lookup-status{white-space:pre-wrap;margin-top:16px!important}.lookup-status.confirmed{background:#edf8f3;color:#16634e;padding:14px;border-radius:8px}.receipt-note{margin-top:12px!important;font-size:13px!important}.receipt-download{display:inline-flex;align-items:center;padding:9px 15px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-weight:600;background:white;text-decoration:none}
 .student-fields{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 16px}.student-fields label{font-size:14px;font-weight:600;display:grid;gap:5px}.student-fields input{border:1px solid var(--line);border-radius:6px;padding:9px 12px;width:220px;max-width:100%}#submission-status{white-space:pre-wrap}.submit-bridge{position:fixed;left:-10px;top:-10px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
 </style>
 </head>
@@ -36,6 +37,7 @@
 <header><a class="brand" href="index.html">sort<span>/</span>lab</a><nav aria-label="메인 메뉴"><a href="index.html">정렬 실험실</a><a href="assignments.html" aria-current="page">구현 과제</a></nav><span id="runtime" class="runtime" role="status">실행 시 Python을 불러옵니다</span></header>
 <main>
 <h1>핵심 함수를 완성해 보세요.</h1><p class="intro">세 함수를 완성하고 한 번에 제출하세요. 각 과제는 횟수 제한 없이 연습 채점하고 수정할 수 있습니다.</p>
+<p class="history-shortcut"><button id="show-submission-history">내 제출 확인</button></p>
 <div class="tabs" aria-label="과제 선택"><button data-kind="partition" aria-pressed="true">01 퀵 정렬</button><button data-kind="merge" aria-pressed="false">02 병합 정렬</button><button data-kind="siftdown" aria-pressed="false">03 힙 정렬</button></div>
 <div class="workspace">
   <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><p class="editor-label">전체 코드입니다. 강조된 함수 본문만 수정할 수 있습니다.</p><div class="source-editor"><pre id="locked-before" class="fixed-source" aria-label="고정된 정렬 함수 · 수정 불가"></pre><div class="editable-source"><label class="editor-label" for="body-code">이 함수의 본문을 구현하세요 · 들여쓰기 4칸</label><pre id="signature" class="signature"></pre><div class="code-input"><pre id="body-highlight" class="code-highlight" aria-hidden="true"></pre><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea></div></div><pre id="locked-after" class="fixed-source" aria-label="고정된 진입 함수 · 수정 불가"></pre></div><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
@@ -45,6 +47,7 @@
 <div id="notice" class="notice" role="status" hidden></div>
 <section id="results" class="panel results" hidden aria-label="채점 결과"><div class="panel-head"><h2><span id="result-kind">연습 채점 결과</span> <span id="stale" class="stale" hidden>코드가 변경됨 · 다시 채점하세요</span></h2><span class="score"><span id="score">0</span><small> / 100</small></span></div><div id="categories" class="score-grid"></div><p class="complex-note" id="complex-note"></p><div class="table-wrap"><table><caption class="tag">입력 크기별 학생 함수 연산 수</caption><thead><tr><th scope="col">n</th><th scope="col">최대 연산 수</th><th scope="col">허용 연산 수</th><th scope="col">정확성 + 예산</th></tr></thead><tbody id="measurements"></tbody></table></div><div id="failures" class="failures"></div></section>
 <section id="batch-submission" class="panel batch-submission" aria-label="세 과제 일괄 제출"><div class="panel-head"><h2>세 과제 한꺼번에 제출</h2><span class="tag" id="batch-progress"></span></div><div id="batch-summary" class="batch-summary"></div><div class="submission"><p id="submission-help">세 과제를 각각 연습 채점한 뒤 제출하세요. 점수와 관계없이 제출할 수 있습니다. 서버가 세 코드를 다시 채점해 하나의 제출 기록으로 저장합니다.</p><p><strong>종합 점수는 세 과제 점수의 평균입니다.</strong> 각 과제는 100점 만점이며, 제출 후에도 수정하여 세 과제를 함께 재제출할 수 있습니다.</p><div class="student-fields"><label for="student-id">학번<input id="student-id" autocomplete="off" maxlength="24" placeholder="학번" required></label><label for="student-name">이름<input id="student-name" autocomplete="name" maxlength="60" placeholder="이름" required></label></div><div class="button-row"><button id="submit" class="primary" disabled>세 과제 한꺼번에 제출</button></div><p id="submission-status" role="status" hidden></p></div></section>
+<section id="submission-history" class="panel submission-history" aria-label="내 제출 확인"><div class="panel-head"><h2>내 제출 확인</h2><span class="tag">서버에 저장된 기록 조회</span></div><div class="history-body"><p>학번과 제출할 때 받은 접수 번호로 확인하세요. 같은 브라우저에서는 저장해 둔 접수 정보를 자동으로 조회합니다.</p><div class="student-fields"><label for="lookup-student-id">조회할 학번<input id="lookup-student-id" autocomplete="off" maxlength="24"></label><label class="receipt-field" for="lookup-receipt-id">접수 번호<input id="lookup-receipt-id" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="36" placeholder="제출 후 받은 접수 번호"></label></div><div class="button-row"><button id="lookup-submit">제출 여부 확인</button><a id="receipt-download" class="receipt-download" hidden>접수증 저장</a><button id="forget-receipt" hidden>이 브라우저의 접수 정보 지우기</button></div><p id="lookup-status" class="lookup-status" role="status">조회할 접수 정보를 입력하세요. 이 브라우저에 정보가 없어도 미제출을 뜻하지는 않습니다.</p><p id="receipt-storage-note" class="receipt-note">접수 번호를 보관하면 다른 기기에서도 조회할 수 있습니다. 접수 번호를 잃어버렸다면 담당 교수님에게 확인을 요청하세요.</p></div></section>
 <section id="preview" class="panel preview" hidden><div class="panel-head"><h2>작성한 코드로 전체 정렬 살펴보기</h2><span class="tag">고정 코드 + 내 함수</span></div><div class="preview-controls"><label for="preview-array">입력 배열</label><input id="preview-array" value="38, 15, 62, 27, 48, 9, 55, 21" aria-label="시각화할 배열"><button id="replay">실행 기록 만들기</button></div><div id="iframe-mount"></div></section>
 <footer>연습 채점은 브라우저에서 진행합니다. 최종 제출 시 서버가 세 코드를 다시 채점해 하나의 기록으로 저장하며, 저장이 확인되면 접수 번호와 종합 점수를 표시합니다. 코드를 수정하여 계속 재제출할 수 있습니다.</footer>
 </main>
@@ -131,9 +134,9 @@ function renderBatch(){
 function updateButtons(){
  const locked=app.busy||app.submitting,valid=fresh()&&!app.result.error&&!locked,recorded=app.recordedKey&&app.recordedKey===submissionKey();
  $('grade').disabled=locked;$('cancel').hidden=!app.busy;$('body-code').readOnly=locked;document.querySelectorAll('[data-kind]').forEach(b=>b.disabled=locked);
- $('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=locked||!allReady()||!SUBMISSION.url||Boolean(recorded);
+ $('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=locked||app.lookupBusy||!allReady()||!SUBMISSION.url||Boolean(recorded);
  $('submit').textContent=app.submitting?'세 과제 서버 채점·저장 중…':recorded?'세 과제 제출 완료':'세 과제 한꺼번에 제출';
- $('student-id').disabled=locked;$('student-name').disabled=locked;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'이 과제 연습 채점';renderBatch();
+ $('student-id').disabled=locked;$('student-name').disabled=locked;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'이 과제 연습 채점';renderBatch();updateLookupButtons();
 }
 function discard(){if(app.worker)app.worker.terminate();if(app.workerURL)URL.revokeObjectURL(app.workerURL);app.worker=null;app.workerURL=null;app.ready=false;clearTimeout(app.timer);}
 function stop(){app.generation++;discard();app.busy=false;app.result=null;app.report=null;$('results').hidden=true;$('runtime').textContent='채점 중단';notice('채점을 중단했습니다. 코드를 수정하고 다시 시도할 수 있습니다.');updateButtons();}
@@ -176,7 +179,7 @@ function preview(){
 function sendReplay(){if(app.frame&&app.pendingReplay)app.frame.contentWindow.postMessage(app.pendingReplay,location.protocol==='file:'?'*':location.origin);}
 window.addEventListener('message',event=>{if(event.source!==app.frame?.contentWindow)return;if(location.protocol!=='file:'&&event.origin!==location.origin)return;if(event.data?.type==='sortlab-replay-ready')sendReplay();});
 function submissionKey(){return JSON.stringify({studentId:$('student-id').value.trim(),studentName:$('student-name').value.trim(),bodies:KINDS.map(bodyFor)});}
-let bridgeWindow=null,bridgeOrigin=null,bridgePromise=null,bridgeFrame=null,bridgeChannel=null,bridgeResolve=null,bridgeReject=null,bridgeTimer=null,pendingSave=null;
+let bridgeWindow=null,bridgeOrigin=null,bridgePromise=null,bridgeFrame=null,bridgeChannel=null,bridgeResolve=null,bridgeReject=null,bridgeTimer=null,pendingSave=null,pendingLookup=null;
 function ensureBridge(){
  if(bridgeWindow)return Promise.resolve();if(bridgePromise)return bridgePromise;
  bridgeChannel=crypto.randomUUID();
@@ -191,7 +194,13 @@ window.addEventListener('message',event=>{
  let origin;try{origin=new URL(event.origin);}catch{return;}
  if(origin.protocol!=='https:'||!(origin.hostname==='script.google.com'||origin.hostname==='script.googleusercontent.com'||origin.hostname.endsWith('-script.googleusercontent.com')))return;
  if(data.type==='sortlab-submit-ready'&&!bridgeWindow){bridgeWindow=event.source;bridgeOrigin=event.origin;clearTimeout(bridgeTimer);bridgeResolve?.();return;}
- if(event.source!==bridgeWindow||!pendingSave||data.requestId!==pendingSave.requestId)return;
+ if(event.source!==bridgeWindow)return;
+ if(pendingLookup&&data.requestId===pendingLookup.requestId){
+  if(data.type==='sortlab-lookup-result'){clearTimeout(pendingLookup.timer);pendingLookup.resolve(data.status);pendingLookup=null;}
+  else if(data.type==='sortlab-lookup-error'){clearTimeout(pendingLookup.timer);pendingLookup.reject(new Error(String(data.message||'조회 실패')));pendingLookup=null;}
+  return;
+ }
+ if(!pendingSave||data.requestId!==pendingSave.requestId)return;
  if(data.type==='sortlab-submit-result'){
   if(!data.receipt||data.receipt.requestId!==pendingSave.requestId||typeof data.receipt.responseId!=='string'||!data.receipt.responseId)return;
   clearTimeout(pendingSave.timer);pendingSave.resolve(data.receipt);pendingSave=null;
@@ -205,12 +214,13 @@ function saveSubmission(payload){return new Promise((resolve,reject)=>{
  bridgeWindow.postMessage({type:'sortlab-submit',channel:bridgeChannel,payload},bridgeOrigin);
 });}
 async function submit(){
- if(!allReady()||app.busy||!SUBMISSION.url||app.submitting)return;
+ if(!allReady()||app.busy||!SUBMISSION.url||app.submitting||app.lookupBusy)return;
  const studentId=$('student-id').value.trim(),studentName=$('student-name').value.trim();
  if(!/^[A-Za-z0-9-]{4,24}$/.test(studentId)){notice('학번을 입력하세요. 영문·숫자·하이픈 4~24자입니다.',true);$('student-id').focus();return;}
  if(!studentName||studentName.length>60||/^[=+@-]/.test(studentName)||/[\r\n\t]/.test(studentName)){notice('이름을 확인하세요.',true);$('student-name').focus();return;}
  const key=submissionKey();if(app.recordedKey===key)return;
  if(!app.attempt||app.attempt.key!==key)app.attempt={key,payload:{requestId:crypto.randomUUID(),studentId,studentName,reports:KINDS.map(kind=>({assignment:kind,code:TASKS[kind].signature+'\n'+bodyFor(kind)}))}};
+ rememberReceipt({studentId,receiptId:app.attempt.payload.requestId});
  app.submitting=true;updateButtons();$('submission-status').hidden=false;$('submission-status').textContent='서버에서 세 코드를 다시 채점하고 하나의 제출 기록으로 저장하고 있습니다…';
  try{
   await ensureBridge();const receipt=await saveSubmission(app.attempt.payload);
@@ -221,10 +231,72 @@ async function submit(){
   const current=app.grades[app.kind];renderResult(current.result,current.body,app.kind,true,true);app.recordedKey=key;
   $('submission-status').hidden=false;
   $('submission-status').textContent='세 과제 제출 완료 · 종합 '+receipt.score+' / 100점\n'+KINDS.map(kind=>TASK_LABELS[kind]+' '+app.grades[kind].result.score+'점').join(' · ')+'\n'+new Date(receipt.submittedAt).toLocaleString('ko-KR')+' · 접수 번호 '+receipt.requestId;
+  const verified={found:true,receiptId:receipt.requestId,responseId:receipt.responseId,submittedAt:receipt.submittedAt,assignment:receipt.assignment,score:receipt.score,scores:receipt.results.map(r=>({kind:r.kind,score:r.score}))};
+  rememberReceipt({studentId,receiptId:receipt.requestId,responseId:receipt.responseId});renderReceipt(verified,studentId);
   notice('세 과제가 하나의 기록으로 제출되었습니다. 수정한 과제를 다시 연습 채점한 뒤 세 과제를 함께 재제출할 수 있습니다.');
  }catch(error){$('submission-status').textContent='일괄 제출을 확인하지 못했습니다. '+error.message;notice(error.message,true);}
  finally{app.submitting=false;updateButtons();}
 }
+const RECEIPT_STORAGE='sortlab.last-receipt.v1';
+let savedReceipt=null,receiptDownloadURL=null;
+function validReceiptQuery(value){return value&&typeof value.studentId==='string'&&/^[A-Za-z0-9-]{4,24}$/.test(value.studentId)&&typeof value.receiptId==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(value.receiptId);}
+function clearReceiptView(){
+ $('show-submission-history').textContent='내 제출 확인';
+ if(receiptDownloadURL)URL.revokeObjectURL(receiptDownloadURL);receiptDownloadURL=null;
+ $('receipt-download').hidden=true;$('receipt-download').removeAttribute('href');$('lookup-status').className='lookup-status';
+}
+function rememberReceipt(query){
+ savedReceipt={studentId:query.studentId,receiptId:query.receiptId};if(query.responseId)savedReceipt.responseId=query.responseId;
+ $('lookup-student-id').value=query.studentId;$('lookup-receipt-id').value=query.receiptId;clearReceiptView();
+ $('lookup-status').textContent='접수 정보를 저장했습니다. 서버 확인 후 제출 여부를 표시합니다.';
+ try{localStorage.setItem(RECEIPT_STORAGE,JSON.stringify(savedReceipt));$('receipt-storage-note').textContent='접수 정보를 이 브라우저에 저장했습니다. 접수증을 보관하면 다른 기기에서도 조회할 수 있습니다. 공용 기기에서는 확인 후 접수 정보를 지우세요.';}
+ catch{$('receipt-storage-note').textContent='이 브라우저에 접수 정보를 저장할 수 없습니다. 제출 확인 후 접수증을 저장하거나 접수 번호를 따로 보관하세요.';}
+}
+function updateLookupButtons(){
+ const locked=Boolean(app.lookupBusy||app.submitting);
+ $('lookup-submit').disabled=locked||!SUBMISSION.url;$('lookup-submit').textContent=app.lookupBusy?'서버에서 확인 중…':'제출 여부 확인';
+ $('lookup-student-id').disabled=locked;$('lookup-receipt-id').disabled=locked;$('forget-receipt').disabled=locked;$('forget-receipt').hidden=!savedReceipt;
+}
+function renderReceipt(status,studentId){
+ clearReceiptView();
+ const batch=status.assignment==='sorting-all',time=new Date(status.submittedAt).toLocaleString('ko-KR');
+ $('show-submission-history').textContent=batch?'내 제출 확인 · 제출 기록 있음':'내 제출 확인 · 개별 기록 있음';
+ const lines=[batch?'제출 확인 완료 · 세 과제 일괄 제출':'제출 확인 완료 · 이전 방식의 개별 과제 제출','제출 시각: '+time,(batch?'종합 점수: ':'점수: ')+status.score+' / 100점',status.scores.map(r=>TASK_LABELS[r.kind]+' '+r.score+'점').join(' · '),'접수 번호: '+status.receiptId];
+ $('lookup-status').textContent=lines.join('\n')+(batch?'\n이 접수에 저장된 결과입니다. 이후 수정한 코드는 다시 제출해야 합니다.':'\n개별 과제 기록이며, 세 과제 일괄 제출 완료를 뜻하지는 않습니다.');$('lookup-status').className='lookup-status confirmed';
+ const text=['Sort Lab 과제 접수증','학번: '+studentId,...lines,'조회 주소: https://dm.kookmin.ac.kr/sorting/assignments.html','학번과 접수 번호로 서버 저장 여부를 다시 확인할 수 있습니다.'].join('\n');
+ receiptDownloadURL=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));$('receipt-download').href=receiptDownloadURL;$('receipt-download').download='sortlab-receipt-'+status.receiptId+'.txt';$('receipt-download').hidden=false;
+}
+function requestLookup(payload){return new Promise((resolve,reject)=>{
+ const timer=setTimeout(()=>{pendingLookup=null;reject(new Error('조회 응답을 받지 못했습니다. 잠시 후 다시 확인하세요.'));},45000);
+ pendingLookup={resolve,reject,timer,requestId:payload.requestId};bridgeWindow.postMessage({type:'sortlab-lookup',channel:bridgeChannel,payload},bridgeOrigin);
+});}
+async function lookupReceipt(){
+ if(app.lookupBusy||app.submitting||!SUBMISSION.url)return;
+ const query={studentId:$('lookup-student-id').value.trim(),receiptId:$('lookup-receipt-id').value.trim().toLowerCase()};
+ clearReceiptView();
+ if(!validReceiptQuery(query)){$('lookup-status').textContent='학번과 접수 번호 형식을 확인하세요. 접수 번호는 제출할 때 받은 하이픈이 포함된 36자리입니다.';return;}
+ if(savedReceipt?.studentId===query.studentId&&savedReceipt?.receiptId===query.receiptId&&savedReceipt.responseId)query.responseId=savedReceipt.responseId;
+ app.lookupBusy=true;updateButtons();$('lookup-status').textContent='서버에 저장된 제출 기록을 확인하고 있습니다…';
+ try{
+  await ensureBridge();const status=await requestLookup({...query,requestId:crypto.randomUUID()});
+  if(!status||typeof status.found!=='boolean')throw new Error('조회 결과를 확인하지 못했습니다.');
+  if(!status.found){$('lookup-status').textContent='이 학번과 접수 번호에 일치하는 기록을 찾지 못했습니다. 입력값을 확인하세요. 다른 접수 번호로 제출한 기록이 있는지는 알 수 없습니다.';return;}
+  const expected=status.assignment==='sorting-all'?KINDS:KINDS.includes(status.assignment)?[status.assignment]:[];
+  if(status.receiptId!==query.receiptId||!status.responseId||!Number.isFinite(Date.parse(status.submittedAt))||!expected.length||!Array.isArray(status.scores)||status.scores.length!==expected.length||!expected.every(kind=>status.scores.filter(r=>r.kind===kind&&Number.isFinite(r.score)&&r.score>=0&&r.score<=100).length===1)||status.score!==Math.round(status.scores.reduce((sum,r)=>sum+r.score,0)/expected.length*100)/100)throw new Error('조회 결과를 확인하지 못했습니다.');
+  rememberReceipt({...query,responseId:status.responseId});renderReceipt(status,query.studentId);
+ }catch(error){$('lookup-status').textContent='제출 여부를 확인하지 못했습니다. '+error.message+' 이 안내는 미제출을 뜻하지 않습니다.';}
+ finally{app.lookupBusy=false;updateButtons();}
+}
+$('lookup-submit').addEventListener('click',lookupReceipt);
+$('show-submission-history').addEventListener('click',()=>{$('submission-history').scrollIntoView({behavior:'smooth',block:'start'});$('lookup-student-id').focus({preventScroll:true});});
+for(const id of ['lookup-student-id','lookup-receipt-id']){
+ $(id).addEventListener('input',()=>{clearReceiptView();$('lookup-status').textContent='입력한 정보로 제출 여부를 다시 확인하세요.';});
+ $(id).addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();lookupReceipt();}});
+}
+$('forget-receipt').addEventListener('click',()=>{
+ try{localStorage.removeItem(RECEIPT_STORAGE);}catch{$('lookup-status').textContent='브라우저의 접수 정보를 지우지 못했습니다. 브라우저 설정에서 사이트 데이터를 지워 주세요.';return;}
+ savedReceipt=null;clearReceiptView();$('lookup-student-id').value='';$('lookup-receipt-id').value='';$('lookup-status').textContent='이 브라우저의 접수 정보를 지웠습니다. 서버에 제출한 기록은 그대로 남아 있습니다.';$('receipt-storage-note').textContent='접수 번호를 보관하면 다른 기기에서도 조회할 수 있습니다.';updateLookupButtons();
+});
 ['student-id','student-name'].forEach(id=>$(id).addEventListener('input',()=>{updateButtons();$('submission-status').hidden=true;}));
 $('batch-summary').addEventListener('click',event=>{const button=event.target.closest('[data-open-task]');if(button){selectTask(button.dataset.openTask);$('task-title').scrollIntoView({block:'start'});}});
 $('grade').addEventListener('click',grade);$('cancel').addEventListener('click',stop);$('preview-button').addEventListener('click',preview);$('replay').addEventListener('click',preview);$('submit').addEventListener('click',submit);
@@ -237,5 +309,6 @@ $('body-code').addEventListener('keydown',event=>{if(app.busy||app.submitting)re
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();grade();}});window.addEventListener('pagehide',discard);
 for(const kind of KINDS){try{app.drafts[kind]=localStorage.getItem('sortlab.assignment.'+kind)||STARTERS[kind];}catch{app.drafts[kind]=STARTERS[kind];}}
 app.kind=null;selectTask(TASKS[location.hash.slice(1)]?location.hash.slice(1):'partition');
+try{const stored=JSON.parse(localStorage.getItem(RECEIPT_STORAGE)||'null');if(validReceiptQuery(stored)){savedReceipt=stored;$('lookup-student-id').value=stored.studentId;$('lookup-receipt-id').value=stored.receiptId;lookupReceipt();}}catch{}
 </script>
 </body></html>
