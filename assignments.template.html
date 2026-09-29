@@ -28,23 +28,25 @@
 @media(max-width:450px){.code-highlight,#body-code{font-size:13px}}
 @media(forced-colors:active){.code-highlight{display:none}#body-code{color:CanvasText;-webkit-text-fill-color:CanvasText;caret-color:CanvasText}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.right{grid-row:1}.source-editor{max-height:none}}
+.batch-submission{margin-top:20px}.batch-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px 20px}.batch-item{border:1px solid var(--line);border-radius:9px;padding:14px;display:grid;gap:7px}.batch-item strong{font-size:15px}.batch-item span{font-size:14px;color:var(--muted)}.batch-item button{justify-self:start;padding:4px 10px}.batch-item.ready{border-color:#a6d6c7;background:#f5fcf9}.batch-item .pass{color:#16755e}.batch-item .stale{color:#a75b15}@media(max-width:650px){.batch-summary{grid-template-columns:1fr}}
 .student-fields{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 16px}.student-fields label{font-size:14px;font-weight:600;display:grid;gap:5px}.student-fields input{border:1px solid var(--line);border-radius:6px;padding:9px 12px;width:220px;max-width:100%}#submission-status{white-space:pre-wrap}.submit-bridge{position:fixed;left:-10px;top:-10px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
 <header><a class="brand" href="index.html">sort<span>/</span>lab</a><nav aria-label="메인 메뉴"><a href="index.html">정렬 실험실</a><a href="assignments.html" aria-current="page">구현 과제</a></nav><span id="runtime" class="runtime" role="status">실행 시 Python을 불러옵니다</span></header>
 <main>
-<h1>핵심 함수를 완성해 보세요.</h1><p class="intro">고정된 정렬 코드와 함께 실행합니다. 채점 횟수 제한 없이 수정하고 다시 도전할 수 있습니다.</p>
+<h1>핵심 함수를 완성해 보세요.</h1><p class="intro">세 함수를 완성하고 한 번에 제출하세요. 각 과제는 횟수 제한 없이 연습 채점하고 수정할 수 있습니다.</p>
 <div class="tabs" aria-label="과제 선택"><button data-kind="partition" aria-pressed="true">01 퀵 정렬</button><button data-kind="merge" aria-pressed="false">02 병합 정렬</button><button data-kind="siftdown" aria-pressed="false">03 힙 정렬</button></div>
 <div class="workspace">
   <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><p class="editor-label">전체 코드입니다. 강조된 함수 본문만 수정할 수 있습니다.</p><div class="source-editor"><pre id="locked-before" class="fixed-source" aria-label="고정된 정렬 함수 · 수정 불가"></pre><div class="editable-source"><label class="editor-label" for="body-code">이 함수의 본문을 구현하세요 · 들여쓰기 4칸</label><pre id="signature" class="signature"></pre><div class="code-input"><pre id="body-highlight" class="code-highlight" aria-hidden="true"></pre><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea></div></div><pre id="locked-after" class="fixed-source" aria-label="고정된 진입 함수 · 수정 불가"></pre></div><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
   <div class="right"><section class="panel"><div class="panel-head"><h2>구현할 동작</h2><span class="tag" id="complexity-target"></span></div><div id="contract" class="contract"></div></section></div>
 </div>
-<details class="panel criteria"><summary>채점 기준 · 지원하는 Python 문법</summary><p><strong>함수 단독 정확성 40점 + 전체 정렬 정확성 40점 + 연산 수 기준 20점</strong>으로 채점합니다. 전체 정렬은 위의 고정 코드를 사용합니다. 함수가 빠르게 끝나더라도 결과가 틀리면 연산 수 점수를 받을 수 없습니다.</p><p>연산 수 검사는 n = 64, 128, 256, 512, 1024에서 진행합니다. 같은 크기의 여러 입력 중 가장 큰 연산 수를 표시합니다. 기준을 넘으면 해당 검사를 중단하므로 실패한 경우의 수치는 중단 시점까지의 연산 수입니다.</p><ul><li>partition / merge: <code>100n + 160</code>회 이하. n은 처리 구간의 길이입니다.</li><li>siftdown: <code>120⌈log₂(n + 1)⌉ + 120</code>회 이하. n은 size입니다. 루트와 내부 노드, 말단 노드에서 검사합니다.</li><li>문장·식 평가, 반복 진행, 대입·배열 접근을 셉니다. 슬라이스, 배열 복사·반복·연결, min/max의 비용도 원소 수만큼 더합니다. 고정 코드 자체의 연산은 제외합니다.</li><li>이 결과는 유한한 입력에서 공개된 연산 예산을 충족했는지 보여줍니다. 모든 입력에 대한 점근적 시간복잡도의 증명은 아닙니다.</li></ul><p>지원: 대입·교환, if/elif/else, for/while, break/continue, return, 기본 산술·비교, 리스트·튜플·인덱스·슬라이스, <code>len, range, min, max, abs, list, append</code>, 자기 재귀. import, 내장 정렬, 별도 함수·클래스 정의, 컴프리헨션은 사용할 수 없습니다. 배열 길이는 유지하세요. 재귀 깊이는 최대 100입니다.</p><p>문법과 코드를 제한한 실행기가 학생 함수를 평가합니다. 배열 원소는 숫자를 사용하며 보조 배열에는 임시로 None을 넣을 수 있습니다. 작성한 코드는 이 브라우저에 저장되며, 아래 제출 버튼을 눌러야 제출 기록이 남습니다.</p></details>
+<details class="panel criteria"><summary>채점 기준 · 지원하는 Python 문법</summary><p><strong>함수 단독 정확성 40점 + 전체 정렬 정확성 40점 + 연산 수 기준 20점</strong>으로 채점합니다. 전체 정렬은 위의 고정 코드를 사용합니다. 함수가 빠르게 끝나더라도 결과가 틀리면 연산 수 점수를 받을 수 없습니다.</p><p>연산 수 검사는 n = 64, 128, 256, 512, 1024에서 진행합니다. 같은 크기의 여러 입력 중 가장 큰 연산 수를 표시합니다. 기준을 넘으면 해당 검사를 중단하므로 실패한 경우의 수치는 중단 시점까지의 연산 수입니다.</p><ul><li>partition / merge: <code>100n + 160</code>회 이하. n은 처리 구간의 길이입니다.</li><li>siftdown: <code>120⌈log₂(n + 1)⌉ + 120</code>회 이하. n은 size입니다. 루트와 내부 노드, 말단 노드에서 검사합니다.</li><li>문장·식 평가, 반복 진행, 대입·배열 접근을 셉니다. 슬라이스, 배열 복사·반복·연결, min/max의 비용도 원소 수만큼 더합니다. 고정 코드 자체의 연산은 제외합니다.</li><li>이 결과는 유한한 입력에서 공개된 연산 예산을 충족했는지 보여줍니다. 모든 입력에 대한 점근적 시간복잡도의 증명은 아닙니다.</li></ul><p>지원: 대입·교환, if/elif/else, for/while, break/continue, return, 기본 산술·비교, 리스트·튜플·인덱스·슬라이스, <code>len, range, min, max, abs, list, append</code>, 자기 재귀. import, 내장 정렬, 별도 함수·클래스 정의, 컴프리헨션은 사용할 수 없습니다. 배열 길이는 유지하세요. 재귀 깊이는 최대 100입니다.</p><p>문법과 코드를 제한한 실행기가 학생 함수를 평가합니다. 배열 원소는 숫자를 사용하며 보조 배열에는 임시로 None을 넣을 수 있습니다. 작성한 코드는 이 브라우저에 저장되며, 세 과제 일괄 제출 버튼을 눌러야 제출 기록이 남습니다.</p></details>
 <div id="notice" class="notice" role="status" hidden></div>
-<section id="results" class="panel results" hidden aria-label="채점 결과"><div class="panel-head"><h2><span id="result-kind">연습 채점 결과</span> <span id="stale" class="stale" hidden>코드가 변경됨 · 다시 채점하세요</span></h2><span class="score"><span id="score">0</span><small> / 100</small></span></div><div id="categories" class="score-grid"></div><p class="complex-note" id="complex-note"></p><div class="table-wrap"><table><caption class="tag">입력 크기별 학생 함수 연산 수</caption><thead><tr><th scope="col">n</th><th scope="col">최대 연산 수</th><th scope="col">허용 연산 수</th><th scope="col">정확성 + 예산</th></tr></thead><tbody id="measurements"></tbody></table></div><div id="failures" class="failures"></div><div class="submission"><h3>과제 제출</h3><p id="submission-help">학번과 이름을 입력하고 제출하세요. 서버가 코드를 다시 채점하여 기록합니다.</p><div class="student-fields"><label for="student-id">학번<input id="student-id" autocomplete="off" maxlength="24" placeholder="학번" required></label><label for="student-name">이름<input id="student-name" autocomplete="name" maxlength="60" placeholder="이름" required></label></div><div class="button-row"><button id="submit" class="primary" disabled>과제 제출</button></div><p id="submission-status" role="status" hidden></p></div></section>
+<section id="results" class="panel results" hidden aria-label="채점 결과"><div class="panel-head"><h2><span id="result-kind">연습 채점 결과</span> <span id="stale" class="stale" hidden>코드가 변경됨 · 다시 채점하세요</span></h2><span class="score"><span id="score">0</span><small> / 100</small></span></div><div id="categories" class="score-grid"></div><p class="complex-note" id="complex-note"></p><div class="table-wrap"><table><caption class="tag">입력 크기별 학생 함수 연산 수</caption><thead><tr><th scope="col">n</th><th scope="col">최대 연산 수</th><th scope="col">허용 연산 수</th><th scope="col">정확성 + 예산</th></tr></thead><tbody id="measurements"></tbody></table></div><div id="failures" class="failures"></div></section>
+<section id="batch-submission" class="panel batch-submission" aria-label="세 과제 일괄 제출"><div class="panel-head"><h2>세 과제 한꺼번에 제출</h2><span class="tag" id="batch-progress"></span></div><div id="batch-summary" class="batch-summary"></div><div class="submission"><p id="submission-help">세 과제를 각각 연습 채점한 뒤 제출하세요. 점수와 관계없이 제출할 수 있습니다. 서버가 세 코드를 다시 채점해 하나의 제출 기록으로 저장합니다.</p><p><strong>종합 점수는 세 과제 점수의 평균입니다.</strong> 각 과제는 100점 만점이며, 제출 후에도 수정하여 세 과제를 함께 재제출할 수 있습니다.</p><div class="student-fields"><label for="student-id">학번<input id="student-id" autocomplete="off" maxlength="24" placeholder="학번" required></label><label for="student-name">이름<input id="student-name" autocomplete="name" maxlength="60" placeholder="이름" required></label></div><div class="button-row"><button id="submit" class="primary" disabled>세 과제 한꺼번에 제출</button></div><p id="submission-status" role="status" hidden></p></div></section>
 <section id="preview" class="panel preview" hidden><div class="panel-head"><h2>작성한 코드로 전체 정렬 살펴보기</h2><span class="tag">고정 코드 + 내 함수</span></div><div class="preview-controls"><label for="preview-array">입력 배열</label><input id="preview-array" value="38, 15, 62, 27, 48, 9, 55, 21" aria-label="시각화할 배열"><button id="replay">실행 기록 만들기</button></div><div id="iframe-mount"></div></section>
-<footer>연습 채점은 브라우저에서 진행합니다. 최종 제출 시 서버가 코드를 다시 채점하고, 저장이 확인되면 접수 번호와 제출 점수를 표시합니다. 코드를 수정하여 계속 재제출할 수 있습니다.</footer>
+<footer>연습 채점은 브라우저에서 진행합니다. 최종 제출 시 서버가 세 코드를 다시 채점해 하나의 기록으로 저장하며, 저장이 확인되면 접수 번호와 종합 점수를 표시합니다. 코드를 수정하여 계속 재제출할 수 있습니다.</footer>
 </main>
 <script id="assignment-engine" type="text/plain">
 __ENGINE__
@@ -66,6 +68,8 @@ self.onmessage=async ({data})=>{
 'use strict';
 const TASKS=__ASSIGNMENTS__;
 const SUBMISSION=__SUBMIT_CONFIG__;
+const KINDS=['partition','merge','siftdown'];
+const TASK_LABELS={partition:'퀵 정렬 · partition',merge:'병합 정렬 · merge',siftdown:'힙 정렬 · siftdown'};
 const $=id=>document.getElementById(id);
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const PY_KEYWORDS=new Set('and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield'.split(' '));
@@ -98,7 +102,7 @@ const CONTRACTS={
 };
 const STARTERS={partition:'    # 마지막 원소를 피벗으로 분할하고 인덱스를 반환하세요.\n    pass',merge:'    # 두 정렬된 구간을 병합하세요.\n    pass',siftdown:'    # root의 값을 아래로 내려 최대 힙을 복구하세요.\n    pass'};
 const SOURCES=['https://cdn.jsdelivr.net/pyodide/v0.27.7/full/','https://unpkg.com/pyodide@0.27.7/'];
-const app={kind:'partition',drafts:{},busy:false,worker:null,workerURL:null,ready:false,source:0,generation:0,result:null,gradedBody:null,gradedKind:null,report:null,frame:null,pendingReplay:null};
+const app={kind:'partition',drafts:{},grades:{},busy:false,worker:null,workerURL:null,ready:false,source:0,generation:0,result:null,gradedBody:null,gradedKind:null,report:null,frame:null,pendingReplay:null};
 function notice(message,error=false){$('notice').hidden=!message;$('notice').textContent=message;$('notice').className='notice'+(error?' error':'');}
 function fitBody(){const editor=$('body-code');editor.style.height='auto';editor.style.height=Math.max(125,editor.scrollHeight)+'px';syncCodeScroll();}
 function saveDraft(){app.drafts[app.kind]=$('body-code').value;try{localStorage.setItem('sortlab.assignment.'+app.kind,$('body-code').value);$('draft-status').textContent='이 브라우저에 저장됨';}catch{$('draft-status').textContent='현재 탭에서만 유지';}}
@@ -108,24 +112,40 @@ function selectTask(kind){
  $('body-code').value=app.drafts[kind];$('signature').innerHTML=highlightPython(TASKS[kind].signature);$('task-title').textContent=kind+' 구현';$('complexity-target').textContent=TASKS[kind].complexity+' 목표';$('contract').innerHTML=CONTRACTS[kind];const [fixed,entry]=TASKS[kind].driver.split('\ndef sort(arr):');$('locked-before').innerHTML=highlightPython(fixed.trimEnd());$('locked-after').innerHTML=highlightPython('def sort(arr):'+entry);colorBody();fitBody();
  document.querySelectorAll('[data-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===kind)));
  app.result=null;app.gradedBody=null;app.report=null;$('results').hidden=true;$('preview').hidden=true;if(app.frame){app.frame.remove();app.frame=null;}app.pendingReplay=null;notice('');updateButtons();
+ const cached=app.grades[kind];if(cached)renderResult(cached.result,cached.body,kind,cached.official,true);
  history.replaceState(null,'','#'+kind);
 }
 function fresh(){return app.result&&app.gradedKind===app.kind&&app.gradedBody===$('body-code').value;}
-function updateButtons(){const locked=app.busy||app.submitting;const valid=fresh()&&!app.result.error&&!locked;$('grade').disabled=locked;$('cancel').hidden=!app.busy;$('body-code').readOnly=locked;document.querySelectorAll('[data-kind]').forEach(b=>b.disabled=locked);$('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=!valid||!SUBMISSION.url||app.recordedKey===submissionKey();$('submit').textContent=app.submitting?'제출 중…':app.recordedKey===submissionKey()?'제출 완료':'과제 제출';$('student-id').disabled=locked;$('student-name').disabled=locked;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'채점하기';}
+function bodyFor(kind){return kind===app.kind?$('body-code').value:app.drafts[kind];}
+function readyFor(kind){const g=app.grades[kind];return Boolean(g&&!g.result.error&&g.body===bodyFor(kind));}
+function allReady(){return KINDS.every(readyFor);}
+function renderBatch(){
+ let count=0;
+ $('batch-summary').innerHTML=KINDS.map(kind=>{
+  const g=app.grades[kind],ready=readyFor(kind);if(ready)count++;
+  const status=!g?'아직 연습 채점하지 않음':g.body!==bodyFor(kind)?'코드 변경됨 · 다시 채점하세요':g.result.error?'코드 오류 · 수정 후 채점하세요':(g.official?'서버 채점 ':'연습 채점 ')+g.result.score+' / 100점';
+  return '<div class="batch-item'+(ready?' ready':'')+'"><strong>'+TASK_LABELS[kind]+'</strong><span class="'+(ready?'pass':'stale')+'">'+esc(status)+'</span><button data-open-task="'+kind+'"'+((app.busy||app.submitting)?' disabled':'')+'>'+ (kind===app.kind?'현재 과제':'코드 열기')+'</button></div>';
+ }).join('');
+ $('batch-progress').textContent=count+' / 3 제출 준비 완료';
+}
+function updateButtons(){
+ const locked=app.busy||app.submitting,valid=fresh()&&!app.result.error&&!locked,recorded=app.recordedKey&&app.recordedKey===submissionKey();
+ $('grade').disabled=locked;$('cancel').hidden=!app.busy;$('body-code').readOnly=locked;document.querySelectorAll('[data-kind]').forEach(b=>b.disabled=locked);
+ $('preview-button').disabled=!valid;$('replay').disabled=!valid;$('submit').disabled=locked||!allReady()||!SUBMISSION.url||Boolean(recorded);
+ $('submit').textContent=app.submitting?'세 과제 서버 채점·저장 중…':recorded?'세 과제 제출 완료':'세 과제 한꺼번에 제출';
+ $('student-id').disabled=locked;$('student-name').disabled=locked;$('stale').hidden=!app.result||fresh();$('grade').textContent=app.busy?'채점 중…':'이 과제 연습 채점';renderBatch();
+}
 function discard(){if(app.worker)app.worker.terminate();if(app.workerURL)URL.revokeObjectURL(app.workerURL);app.worker=null;app.workerURL=null;app.ready=false;clearTimeout(app.timer);}
 function stop(){app.generation++;discard();app.busy=false;app.result=null;app.report=null;$('results').hidden=true;$('runtime').textContent='채점 중단';notice('채점을 중단했습니다. 코드를 수정하고 다시 시도할 수 있습니다.');updateButtons();}
-function renderResult(result,body,kind,official=false){
+function renderResult(result,body,kind,official=false,quiet=false){
+ app.grades[kind]={result,body,official};
  $('result-kind').textContent=official?'서버 채점 · 제출 결과':'연습 채점 결과';
- $('submission-status').hidden=true;
  app.result=result;app.gradedBody=body;app.gradedKind=kind;$('results').hidden=false;$('score').textContent=result.score;
  $('categories').innerHTML=(result.groups||[]).map(g=>`<div class="category"><h3>${esc(g.name)}</h3><strong>${g.points} / ${g.max}</strong><span>${g.passed} / ${g.total} 검사 통과</span></div>`).join('');
  $('complex-note').textContent=TASKS[kind].complexity+' 목표에 대한 연산 예산 검사입니다. 슬라이스·복사 비용도 포함하며, 시간복잡도를 증명하는 검사는 아닙니다.';
  $('measurements').innerHTML=(result.complexity||[]).map(row=>`<tr><td>${row.n}</td><td>${row.ops.toLocaleString()}</td><td>${row.limit.toLocaleString()}</td><td class="${row.passed?'pass':'fail'}">${row.passed?'통과':'미충족'}</td></tr>${row.message?`<tr><td colspan="4" class="fail">${esc(row.message)}</td></tr>`:''}`).join('');
  $('failures').innerHTML=(result.failures||[]).map((f,i)=>`<details class="failure"${i===0?' open':''}><summary>${esc(f.group)} · 실패 사례 ${i+1}</summary><p>${esc(f.message)}</p><pre>입력: ${esc(JSON.stringify(f.input))}\n${f.full?'전체 sort(arr) 실행':'인수: '+esc(JSON.stringify(f.params))}\n실제 배열: ${esc(JSON.stringify(f.actual))}${f.returned!==null?'\n반환값: '+esc(JSON.stringify(f.returned)):''}</pre>${f.full?`<button data-failure="${i}">이 입력으로 시각화</button>`:''}</details>`).join('');
- const now=new Date().toISOString();
- if(!official)app.report=JSON.stringify({service:'Sort Lab',assignment:kind,gradingVersion:result.version,gradedAt:now,score:result.score,groups:result.groups,measurements:result.complexity,code:TASKS[kind].signature+'\n'+body,gradingLocation:'student-browser'},null,2);
- $('submission-help').textContent=SUBMISSION.url?'학번·이름을 확인하고 제출하세요. 서버에서 이 코드를 다시 채점하고 결과를 자동 기록합니다.':'자동 제출 기능을 연결하고 있습니다. 채점과 코드 작성은 이용할 수 있습니다.';
- if(!official)notice(result.error|| (result.score===100?'100점입니다. 아래 과제 제출 버튼을 누르면 기록이 남습니다.':'실패 사례와 연산 수를 확인하고 수정해 보세요. 다시 채점해도 감점되지 않습니다.'),Boolean(result.error));updateButtons();
+ if(!quiet)notice(result.error|| (result.score===100?'이 과제는 100점입니다. 세 과제를 모두 연습 채점한 뒤 아래에서 한꺼번에 제출하세요.':'실패 사례와 연산 수를 확인하고 수정해 보세요. 다시 채점해도 감점되지 않습니다.'),Boolean(result.error));updateButtons();
  if(SUBMISSION.url)ensureBridge().catch(()=>{});
 }
 function grade(){
@@ -155,7 +175,7 @@ function preview(){
 }
 function sendReplay(){if(app.frame&&app.pendingReplay)app.frame.contentWindow.postMessage(app.pendingReplay,location.protocol==='file:'?'*':location.origin);}
 window.addEventListener('message',event=>{if(event.source!==app.frame?.contentWindow)return;if(location.protocol!=='file:'&&event.origin!==location.origin)return;if(event.data?.type==='sortlab-replay-ready')sendReplay();});
-function submissionKey(){return app.report?app.report+'|'+$('student-id').value.trim()+'|'+$('student-name').value.trim():null;}
+function submissionKey(){return JSON.stringify({studentId:$('student-id').value.trim(),studentName:$('student-name').value.trim(),bodies:KINDS.map(bodyFor)});}
 let bridgeWindow=null,bridgeOrigin=null,bridgePromise=null,bridgeFrame=null,bridgeChannel=null,bridgeResolve=null,bridgeReject=null,bridgeTimer=null,pendingSave=null;
 function ensureBridge(){
  if(bridgeWindow)return Promise.resolve();if(bridgePromise)return bridgePromise;
@@ -180,38 +200,42 @@ window.addEventListener('message',event=>{
  }
 });
 function saveSubmission(payload){return new Promise((resolve,reject)=>{
- const timer=setTimeout(()=>{pendingSave=null;reject(new Error('저장 응답을 확인하지 못했습니다. 다시 제출하여 접수 결과를 확인하세요.'));},45000);
+ const timer=setTimeout(()=>{pendingSave=null;reject(new Error('저장 응답을 확인하지 못했습니다. 다시 제출하여 접수 결과를 확인하세요.'));},120000);
  pendingSave={resolve,reject,timer,requestId:payload.requestId};
  bridgeWindow.postMessage({type:'sortlab-submit',channel:bridgeChannel,payload},bridgeOrigin);
 });}
 async function submit(){
- if(!fresh()||app.result.error||!SUBMISSION.url||app.submitting)return;
+ if(!allReady()||app.busy||!SUBMISSION.url||app.submitting)return;
  const studentId=$('student-id').value.trim(),studentName=$('student-name').value.trim();
  if(!/^[A-Za-z0-9-]{4,24}$/.test(studentId)){notice('학번을 입력하세요. 영문·숫자·하이픈 4~24자입니다.',true);$('student-id').focus();return;}
- if(!studentName||studentName.length>60||/^[=+@-]/.test(studentName)){notice('이름을 확인하세요.',true);$('student-name').focus();return;}
+ if(!studentName||studentName.length>60||/^[=+@-]/.test(studentName)||/[\r\n\t]/.test(studentName)){notice('이름을 확인하세요.',true);$('student-name').focus();return;}
  const key=submissionKey();if(app.recordedKey===key)return;
- if(!app.attempt||app.attempt.key!==key)app.attempt={key,payload:{requestId:crypto.randomUUID(),studentId,studentName,report:JSON.parse(app.report)}};
- app.submitting=true;updateButtons();$('submission-status').hidden=false;$('submission-status').textContent='서버에서 코드를 다시 채점하고 저장하고 있습니다…';
+ if(!app.attempt||app.attempt.key!==key)app.attempt={key,payload:{requestId:crypto.randomUUID(),studentId,studentName,reports:KINDS.map(kind=>({assignment:kind,code:TASKS[kind].signature+'\n'+bodyFor(kind)}))}};
+ app.submitting=true;updateButtons();$('submission-status').hidden=false;$('submission-status').textContent='서버에서 세 코드를 다시 채점하고 하나의 제출 기록으로 저장하고 있습니다…';
  try{
   await ensureBridge();const receipt=await saveSubmission(app.attempt.payload);
-  if(!receipt.result||receipt.result.kind!==app.kind||receipt.result.score!==receipt.score)throw new Error('서버 채점 결과를 확인하지 못했습니다.');
-  renderResult(receipt.result,app.gradedBody,app.kind,true);
-  app.recordedKey=key;
+  if(receipt.assignment!=='sorting-all'||!Array.isArray(receipt.results)||receipt.results.length!==3||!KINDS.every(kind=>receipt.results.filter(r=>r.kind===kind&&Number.isFinite(r.score)&&r.score>=0&&r.score<=100&&!r.error).length===1))throw new Error('세 과제의 서버 채점 결과를 확인하지 못했습니다.');
+  const total=receipt.results.reduce((sum,r)=>sum+r.score,0);
+  if(receipt.totalScore!==total||receipt.score!==Math.round(total/3*100)/100)throw new Error('종합 점수를 확인하지 못했습니다.');
+  for(const result of receipt.results)app.grades[result.kind]={result,body:bodyFor(result.kind),official:true};
+  const current=app.grades[app.kind];renderResult(current.result,current.body,app.kind,true,true);app.recordedKey=key;
   $('submission-status').hidden=false;
-  $('submission-status').textContent='제출 완료 · '+TASKS[app.kind].title+' · 서버 채점 '+receipt.score+'점\n'+new Date(receipt.submittedAt).toLocaleString('ko-KR')+' · 접수 번호 '+receipt.requestId;
-  notice('제출이 기록되었습니다. 수정 후 다시 채점하여 재제출할 수 있습니다.');
- }catch(error){$('submission-status').textContent='제출을 확인하지 못했습니다. '+error.message;notice(error.message,true);}
+  $('submission-status').textContent='세 과제 제출 완료 · 종합 '+receipt.score+' / 100점\n'+KINDS.map(kind=>TASK_LABELS[kind]+' '+app.grades[kind].result.score+'점').join(' · ')+'\n'+new Date(receipt.submittedAt).toLocaleString('ko-KR')+' · 접수 번호 '+receipt.requestId;
+  notice('세 과제가 하나의 기록으로 제출되었습니다. 수정한 과제를 다시 연습 채점한 뒤 세 과제를 함께 재제출할 수 있습니다.');
+ }catch(error){$('submission-status').textContent='일괄 제출을 확인하지 못했습니다. '+error.message;notice(error.message,true);}
  finally{app.submitting=false;updateButtons();}
 }
 ['student-id','student-name'].forEach(id=>$(id).addEventListener('input',()=>{updateButtons();$('submission-status').hidden=true;}));
+$('batch-summary').addEventListener('click',event=>{const button=event.target.closest('[data-open-task]');if(button){selectTask(button.dataset.openTask);$('task-title').scrollIntoView({block:'start'});}});
 $('grade').addEventListener('click',grade);$('cancel').addEventListener('click',stop);$('preview-button').addEventListener('click',preview);$('replay').addEventListener('click',preview);$('submit').addEventListener('click',submit);
 document.querySelectorAll('[data-kind]').forEach(b=>b.addEventListener('click',()=>selectTask(b.dataset.kind)));
 $('failures').addEventListener('click',event=>{const button=event.target.closest('[data-failure]');if(button&&fresh()){const failure=app.result.failures[Number(button.dataset.failure)];$('preview-array').value=JSON.stringify(failure.input);preview();}});
 $('body-code').addEventListener('scroll',syncCodeScroll);
 window.addEventListener('resize',fitBody);
-$('body-code').addEventListener('input',()=>{colorBody();fitBody();saveDraft();updateButtons();if(app.result)notice('코드가 변경되었습니다. 제출하려면 다시 채점하세요.');$('submission-status').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
+$('body-code').addEventListener('input',()=>{colorBody();fitBody();saveDraft();updateButtons();if(app.result)notice(fresh()?'':'코드가 변경되었습니다. 이 과제를 다시 연습 채점하세요.');$('submission-status').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
 $('body-code').addEventListener('keydown',event=>{if(app.busy||app.submitting)return;const el=event.target,start=el.selectionStart,end=el.selectionEnd;if(event.key==='Tab'){event.preventDefault();if(start===end&&!event.shiftKey)el.setRangeText('    ',start,end,'end');else{const begin=el.value.lastIndexOf('\n',start-1)+1;el.setRangeText(el.value.slice(begin,end).split('\n').map(line=>event.shiftKey?line.replace(/^ {1,4}/,''):'    '+line).join('\n'),begin,end,'select');}el.dispatchEvent(new Event('input'));}else if(event.key==='Enter'&&!event.ctrlKey&&!event.metaKey){event.preventDefault();const line=el.value.slice(0,start).split('\n').pop();el.setRangeText('\n'+line.match(/^ */)[0]+(line.trimEnd().endsWith(':')?'    ':''),start,end,'end');el.dispatchEvent(new Event('input'));}});
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();grade();}});window.addEventListener('pagehide',discard);
+for(const kind of KINDS){try{app.drafts[kind]=localStorage.getItem('sortlab.assignment.'+kind)||STARTERS[kind];}catch{app.drafts[kind]=STARTERS[kind];}}
 app.kind=null;selectTask(TASKS[location.hash.slice(1)]?location.hash.slice(1):'partition');
 </script>
 </body></html>
