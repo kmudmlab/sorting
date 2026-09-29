@@ -16,6 +16,17 @@
 .editable-source .editor-label{padding:10px 17px 0;color:#bac9fb;font-size:12px}
 .editable-source .signature{padding:6px 17px 0}
 #body-code{background:transparent;padding:0 17px 12px;border:0;min-height:125px;resize:none;overflow-y:hidden}
+/* The textarea owns editing and accessibility; the decorative layer adds color. */
+.code-input{position:relative}
+.code-highlight,#body-code{font:14px/1.7 var(--mono);font-variant-ligatures:none;letter-spacing:normal;tab-size:4;white-space:pre}
+.code-highlight{position:absolute;inset:0;margin:0;padding:0 17px 12px;overflow:hidden;pointer-events:none;color:#e5ecff}
+#body-code{position:relative;color:transparent;-webkit-text-fill-color:transparent;caret-color:#f4f7ff}
+#body-code::selection{background:rgba(123,145,255,.35)}
+.fixed-source,.signature{color:#d8e2f6;font-variant-ligatures:none}
+.py-keyword{color:#c9a4ff}.py-function{color:#82caff}.py-builtin{color:#70ddd0}
+.py-number,.py-constant{color:#ffc184}.py-string{color:#a5db98}.py-comment{color:#92a6c4}.py-operator{color:#80d9ea}
+@media(max-width:450px){.code-highlight,#body-code{font-size:13px}}
+@media(forced-colors:active){.code-highlight{display:none}#body-code{color:CanvasText;-webkit-text-fill-color:CanvasText;caret-color:CanvasText}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.right{grid-row:1}.source-editor{max-height:none}}
 .student-fields{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 16px}.student-fields label{font-size:14px;font-weight:600;display:grid;gap:5px}.student-fields input{border:1px solid var(--line);border-radius:6px;padding:9px 12px;width:220px;max-width:100%}#submission-status{white-space:pre-wrap}.submit-bridge{position:fixed;left:-10px;top:-10px;width:1px;height:1px;border:0;opacity:0;pointer-events:none}
 </style>
@@ -26,7 +37,7 @@
 <h1>핵심 함수를 완성해 보세요.</h1><p class="intro">고정된 정렬 코드와 함께 실행합니다. 채점 횟수 제한 없이 수정하고 다시 도전할 수 있습니다.</p>
 <div class="tabs" aria-label="과제 선택"><button data-kind="partition" aria-pressed="true">01 퀵 정렬</button><button data-kind="merge" aria-pressed="false">02 병합 정렬</button><button data-kind="siftdown" aria-pressed="false">03 힙 정렬</button></div>
 <div class="workspace">
-  <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><p class="editor-label">전체 코드입니다. 강조된 함수 본문만 수정할 수 있습니다.</p><div class="source-editor"><pre id="locked-before" class="fixed-source" aria-label="고정된 정렬 함수 · 수정 불가"></pre><div class="editable-source"><label class="editor-label" for="body-code">이 함수의 본문을 구현하세요 · 들여쓰기 4칸</label><pre id="signature" class="signature"></pre><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea></div><pre id="locked-after" class="fixed-source" aria-label="고정된 진입 함수 · 수정 불가"></pre></div><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
+  <section class="panel editor-panel"><div class="panel-head"><h2 id="task-title">partition 구현</h2><span class="tag">함수 본문만 편집</span></div><p class="editor-label">전체 코드입니다. 강조된 함수 본문만 수정할 수 있습니다.</p><div class="source-editor"><pre id="locked-before" class="fixed-source" aria-label="고정된 정렬 함수 · 수정 불가"></pre><div class="editable-source"><label class="editor-label" for="body-code">이 함수의 본문을 구현하세요 · 들여쓰기 4칸</label><pre id="signature" class="signature"></pre><div class="code-input"><pre id="body-highlight" class="code-highlight" aria-hidden="true"></pre><textarea id="body-code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-describedby="editor-hint"></textarea></div></div><pre id="locked-after" class="fixed-source" aria-label="고정된 진입 함수 · 수정 불가"></pre></div><div class="editor-footer"><span id="editor-hint">Tab: 들여쓰기 · Ctrl / ⌘ + Enter: 채점</span><span id="draft-status">이 브라우저에 자동 저장</span></div><div class="actions"><button class="primary" id="grade">채점하기</button><button id="cancel" hidden>채점 중단</button><button id="preview-button" disabled>예제로 시각화</button></div></section>
   <div class="right"><section class="panel"><div class="panel-head"><h2>구현할 동작</h2><span class="tag" id="complexity-target"></span></div><div id="contract" class="contract"></div></section></div>
 </div>
 <details class="panel criteria"><summary>채점 기준 · 지원하는 Python 문법</summary><p><strong>함수 단독 정확성 40점 + 전체 정렬 정확성 40점 + 연산 수 기준 20점</strong>으로 채점합니다. 전체 정렬은 위의 고정 코드를 사용합니다. 함수가 빠르게 끝나더라도 결과가 틀리면 연산 수 점수를 받을 수 없습니다.</p><p>연산 수 검사는 n = 64, 128, 256, 512, 1024에서 진행합니다. 같은 크기의 여러 입력 중 가장 큰 연산 수를 표시합니다. 기준을 넘으면 해당 검사를 중단하므로 실패한 경우의 수치는 중단 시점까지의 연산 수입니다.</p><ul><li>partition / merge: <code>100n + 160</code>회 이하. n은 처리 구간의 길이입니다.</li><li>siftdown: <code>120⌈log₂(n + 1)⌉ + 120</code>회 이하. n은 size입니다. 루트와 내부 노드, 말단 노드에서 검사합니다.</li><li>문장·식 평가, 반복 진행, 대입·배열 접근을 셉니다. 슬라이스, 배열 복사·반복·연결, min/max의 비용도 원소 수만큼 더합니다. 고정 코드 자체의 연산은 제외합니다.</li><li>이 결과는 유한한 입력에서 공개된 연산 예산을 충족했는지 보여줍니다. 모든 입력에 대한 점근적 시간복잡도의 증명은 아닙니다.</li></ul><p>지원: 대입·교환, if/elif/else, for/while, break/continue, return, 기본 산술·비교, 리스트·튜플·인덱스·슬라이스, <code>len, range, min, max, abs, list, append</code>, 자기 재귀. import, 내장 정렬, 별도 함수·클래스 정의, 컴프리헨션은 사용할 수 없습니다. 배열 길이는 유지하세요. 재귀 깊이는 최대 100입니다.</p><p>문법과 코드를 제한한 실행기가 학생 함수를 평가합니다. 배열 원소는 숫자를 사용하며 보조 배열에는 임시로 None을 넣을 수 있습니다. 작성한 코드는 이 브라우저에 저장되며, 아래 제출 버튼을 눌러야 제출 기록이 남습니다.</p></details>
@@ -57,6 +68,29 @@ const TASKS=__ASSIGNMENTS__;
 const SUBMISSION=__SUBMIT_CONFIG__;
 const $=id=>document.getElementById(id);
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PY_KEYWORDS=new Set('and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield'.split(' '));
+const PY_BUILTINS=new Set('abs all any bool dict enumerate float int len list max min print range reversed round set sorted str sum tuple zip'.split(' '));
+function highlightPython(source){
+ // Match comments and strings first so their contents are never colored as code.
+ const tokens=/#[^\r\n]*|(?:[rRuUbBfF]{1,2})?(?:"""[\s\S]*?(?:"""|$)|'''[\s\S]*?(?:'''|$)|"(?:\\[^\r\n]|[^"\\\r\n])*(?:"|(?=\r?\n)|$)|'(?:\\[^\r\n]|[^'\\\r\n])*(?:'|(?=\r?\n)|$))|\b(?:0[xX][\da-fA-F_]+|0[bB][01_]+|0[oO][0-7_]+)|(?:\b\d[\d_]*(?:\.[\d_]*)?|\.\d[\d_]*)(?:[eE][+-]?[\d_]+)?|[\p{L}_][\p{L}\p{N}_]*|[+\-*/%=<>!&|^~]+/gu;
+ let html='',end=0;
+ for(const match of source.matchAll(tokens)){
+  const token=match[0],start=match.index;let kind='';
+  if(token[0]==='#')kind='comment';
+  else if(/^(?:[rRuUbBfF]{1,2})?["']/.test(token))kind='string';
+  else if(/^(?:\d|\.\d)/.test(token))kind='number';
+  else if(PY_KEYWORDS.has(token))kind='keyword';
+  else if(['True','False','None'].includes(token))kind='constant';
+  else if(PY_BUILTINS.has(token))kind='builtin';
+  else if(/^[+\-*/%=<>!&|^~]+$/.test(token))kind='operator';
+  else if(/^\s*\(/.test(source.slice(start+token.length)))kind='function';
+  html+=esc(source.slice(end,start))+(kind?'<span class="py-'+kind+'">'+esc(token)+'</span>':esc(token));end=start+token.length;
+ }
+ return html+esc(source.slice(end));
+}
+function syncCodeScroll(){const editor=$('body-code'),layer=$('body-highlight');layer.scrollTop=editor.scrollTop;layer.scrollLeft=editor.scrollLeft;}
+function colorBody(){const editor=$('body-code');$('body-highlight').innerHTML=highlightPython(editor.value)+'\n';syncCodeScroll();}
+
 const CONTRACTS={
  partition:'<p><code>arr[l:r]</code>을 마지막 원소 <code>arr[r-1]</code>를 피벗으로 분할하세요.</p><ul><li>피벗의 최종 인덱스 p를 반환합니다.</li><li>arr[l:p]는 피벗 이하, arr[p+1:r]는 피벗보다 커야 합니다.</li><li>원소를 빠뜨리거나 추가하지 않고, 구간 밖 값은 유지합니다.</li></ul><p>0 ≤ l &lt; r ≤ len(arr)인 입력으로 호출합니다.</p>',
  merge:'<p>이미 정렬된 두 구간 <code>arr[l:m]</code>과 <code>arr[m:r]</code>을 병합하세요.</p><ul><li>arr[l:r]에 오름차순 결과를 씁니다. 반환값은 사용하지 않습니다.</li><li>보조 배열과 슬라이스를 사용할 수 있습니다.</li><li>구간 밖 원소와 전체 배열 길이는 유지합니다. 빈 구간도 처리하세요.</li></ul><p>0 ≤ l ≤ m ≤ r ≤ len(arr)인 입력으로 호출합니다.</p>',
@@ -66,12 +100,12 @@ const STARTERS={partition:'    # 마지막 원소를 피벗으로 분할하고 �
 const SOURCES=['https://cdn.jsdelivr.net/pyodide/v0.27.7/full/','https://unpkg.com/pyodide@0.27.7/'];
 const app={kind:'partition',drafts:{},busy:false,worker:null,workerURL:null,ready:false,source:0,generation:0,result:null,gradedBody:null,gradedKind:null,report:null,frame:null,pendingReplay:null};
 function notice(message,error=false){$('notice').hidden=!message;$('notice').textContent=message;$('notice').className='notice'+(error?' error':'');}
-function fitBody(){const editor=$('body-code');editor.style.height='auto';editor.style.height=Math.max(125,editor.scrollHeight)+'px';}
+function fitBody(){const editor=$('body-code');editor.style.height='auto';editor.style.height=Math.max(125,editor.scrollHeight)+'px';syncCodeScroll();}
 function saveDraft(){app.drafts[app.kind]=$('body-code').value;try{localStorage.setItem('sortlab.assignment.'+app.kind,$('body-code').value);$('draft-status').textContent='이 브라우저에 저장됨';}catch{$('draft-status').textContent='현재 탭에서만 유지';}}
 function selectTask(kind){
  if(app.busy||app.submitting)return; if(app.kind)saveDraft(); app.kind=kind;
  if(!(kind in app.drafts)){try{app.drafts[kind]=localStorage.getItem('sortlab.assignment.'+kind)||STARTERS[kind];}catch{app.drafts[kind]=STARTERS[kind];}}
- $('body-code').value=app.drafts[kind];$('signature').textContent=TASKS[kind].signature;$('task-title').textContent=kind+' 구현';$('complexity-target').textContent=TASKS[kind].complexity+' 목표';$('contract').innerHTML=CONTRACTS[kind];const [fixed,entry]=TASKS[kind].driver.split('\ndef sort(arr):');$('locked-before').textContent=fixed.trimEnd();$('locked-after').textContent='def sort(arr):'+entry;fitBody();
+ $('body-code').value=app.drafts[kind];$('signature').innerHTML=highlightPython(TASKS[kind].signature);$('task-title').textContent=kind+' 구현';$('complexity-target').textContent=TASKS[kind].complexity+' 목표';$('contract').innerHTML=CONTRACTS[kind];const [fixed,entry]=TASKS[kind].driver.split('\ndef sort(arr):');$('locked-before').innerHTML=highlightPython(fixed.trimEnd());$('locked-after').innerHTML=highlightPython('def sort(arr):'+entry);colorBody();fitBody();
  document.querySelectorAll('[data-kind]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===kind)));
  app.result=null;app.gradedBody=null;app.report=null;$('results').hidden=true;$('preview').hidden=true;if(app.frame){app.frame.remove();app.frame=null;}app.pendingReplay=null;notice('');updateButtons();
  history.replaceState(null,'','#'+kind);
@@ -173,7 +207,9 @@ async function submit(){
 $('grade').addEventListener('click',grade);$('cancel').addEventListener('click',stop);$('preview-button').addEventListener('click',preview);$('replay').addEventListener('click',preview);$('submit').addEventListener('click',submit);
 document.querySelectorAll('[data-kind]').forEach(b=>b.addEventListener('click',()=>selectTask(b.dataset.kind)));
 $('failures').addEventListener('click',event=>{const button=event.target.closest('[data-failure]');if(button&&fresh()){const failure=app.result.failures[Number(button.dataset.failure)];$('preview-array').value=JSON.stringify(failure.input);preview();}});
-$('body-code').addEventListener('input',()=>{fitBody();saveDraft();updateButtons();if(app.result)notice('코드가 변경되었습니다. 제출하려면 다시 채점하세요.');$('submission-status').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
+$('body-code').addEventListener('scroll',syncCodeScroll);
+window.addEventListener('resize',fitBody);
+$('body-code').addEventListener('input',()=>{colorBody();fitBody();saveDraft();updateButtons();if(app.result)notice('코드가 변경되었습니다. 제출하려면 다시 채점하세요.');$('submission-status').hidden=true;app.pendingReplay=null;if(app.frame){app.frame.remove();app.frame=null;}$('preview').hidden=true;});
 $('body-code').addEventListener('keydown',event=>{if(app.busy||app.submitting)return;const el=event.target,start=el.selectionStart,end=el.selectionEnd;if(event.key==='Tab'){event.preventDefault();if(start===end&&!event.shiftKey)el.setRangeText('    ',start,end,'end');else{const begin=el.value.lastIndexOf('\n',start-1)+1;el.setRangeText(el.value.slice(begin,end).split('\n').map(line=>event.shiftKey?line.replace(/^ {1,4}/,''):'    '+line).join('\n'),begin,end,'select');}el.dispatchEvent(new Event('input'));}else if(event.key==='Enter'&&!event.ctrlKey&&!event.metaKey){event.preventDefault();const line=el.value.slice(0,start).split('\n').pop();el.setRangeText('\n'+line.match(/^ */)[0]+(line.trimEnd().endsWith(':')?'    ':''),start,end,'end');el.dispatchEvent(new Event('input'));}});
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();grade();}});window.addEventListener('pagehide',discard);
 app.kind=null;selectTask(TASKS[location.hash.slice(1)]?location.hash.slice(1):'partition');
