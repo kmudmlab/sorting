@@ -34,7 +34,7 @@ https://kmudmlab.github.io/sorting/ 주소로 접속해도 같은 사이트로 �
 
 학생은 함수 본문만 편집합니다. 함수 이름·인수·전체 정렬 코드는 고정되어 있습니다.
 즉시 채점하며 횟수 제한 없이 수정하고 재도전할 수 있습니다.
-채점 후 작성한 함수와 고정 코드로 기존 애니메이션을 실행할 수 있습니다.
+현재 dmlab 과제 서비스는 과제 목록과 개별 구현·채점·제출 화면으로 구성되며, 정렬 시각화는 포함하지 않습니다.
 
 ### 채점
 
@@ -53,9 +53,9 @@ partition/merge는 `100n + 160`, siftdown은 `120 ceil(log2(n+1)) + 120`을 사�
 현재 과제 서비스: https://dmlab.kookmin.ac.kr:8766/assignments.html
 
 학교 Google 계정(@kookmin.ac.kr)으로 로그인하고 학번을 입력합니다. 학번 자체는 학교 명부와 자동 대조하지 않습니다.
-연습 채점은 브라우저에서 진행하고, 세 과제 일괄 제출은 dmlab 서버가 다시 채점하여 SQLite에 저장합니다.
+연습 채점은 브라우저에서 진행하고, 각 과제의 최종 제출은 dmlab 서버가 다시 채점하여 SQLite에 저장합니다.
 로그인한 학생은 본인의 제출 이력·최신 점수·최고 점수·제출 코드를 확인할 수 있으며 재제출도 가능합니다.
-종합 점수는 세 과제 점수의 평균입니다. 교수자 계정은 전체 제출 현황을 확인할 수 있습니다.
+각 과제는 독립된 100점 만점입니다. 과제 목록에서 제출 여부를 확인하며 교수자는 과제를 선택해 전체 제출 현황을 확인합니다. 기존 SQLite 일괄 제출 기록은 원본을 유지하고 과제별 점수로 연결합니다.
 
 기존 Google Form 기록은 보존되며 `assignments-legacy.html`에서 접수 번호로 조회할 수 있습니다.
 이전 화면의 새 제출은 종료했습니다. 새 기록은 로그인 계정에 귀속되므로 이전 자가 입력 학번과 자동으로 합치지 않습니다.
@@ -63,7 +63,7 @@ partition/merge는 `100n + 160`, siftdown은 `120 ceil(log2(n+1)) + 120`을 사�
 ### 개발
 
 `assignment_engine.py`가 고정 정렬 코드와 브라우저 채점기를 정의합니다.
-`assignments.template.html`은 공유 과제 UI입니다. `submission-api.json`의 portalUrl이 있으면 새 로그인 사이트 안내와 이전 조회 전용 페이지를 빌드합니다.
+`assignments.template.html`은 이전 과제 UI입니다. `submission-api.json`의 portalUrl이 있으면 새 로그인 사이트 안내와 이전 조회 전용 페이지를 빌드합니다.
 `submission-form.json`은 이전 폼 직접 제출 방식의 미사용 설정입니다.
 
 ```sh
@@ -72,9 +72,9 @@ python3 build_assignments.py
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-빌드된 `assignments.html`은 브라우저 채점기를 포함합니다. 실행 시 Pyodide CDN을 사용합니다.
-애니메이션은 같은 폴더의 `index.html`을 사용하므로 두 HTML을 함께 배포하세요.
-최종 제출은 공개 과제 주소에서 이용하세요.
+현재 빌드된 `assignments.html`은 dmlab 과제 목록으로 연결하는 안내 페이지입니다.
+이전 코드·접수 조회용 `assignments-legacy.html`과 정렬 시각화 `index.html`은 기존 공개 주소에 보존합니다.
+최종 제출은 학교 계정으로 dmlab 과제 서비스에서 진행하세요.
 
 현재 로그인·SQLite 서버는 dmlab의 비공개 작업 폴더에서 운영합니다. 공개 저장소에는 서버 비밀키나 제출 DB를 넣지 않습니다.
 공개 운영 안내는 `server/README.md`에 있습니다.
