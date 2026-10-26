@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Python 정렬 코드를 직접 실행하고, 배열과 변수의 변화를 한 단계씩 살펴보는 정렬 알고리즘 실험실.">
-<title>Sort Lab · 정렬 알고리즘 실험실</title>
+<title>Sorting · Algorithm Lab</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232d4cf1'/%3E%3Cpath d='M8 22V16M16 22V8M24 22V12' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
 <style>
 :root{color-scheme:light;--ink:#17233c;--muted:#637087;--line:#e1e6ee;--bg:#f3f5f9;--blue:#304ded;--teal:#008a82;--orange:#e27635;--code:#141d30;--font:Inter,Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
@@ -35,13 +35,10 @@ main{max-width:1600px;margin:0 auto;padding:30px 40px 24px}.page-heading{display
 .assignment-replay .topbar,.assignment-replay .page-heading,.assignment-replay .details,.assignment-replay .footer{display:none}.assignment-replay main{padding:16px}.assignment-replay #preset{display:none}
 @media(max-width:650px){.site-nav{gap:9px;font-size:13px}.topbar .runtime{display:none}}
 </style>
+<link rel="stylesheet" href="lab-nav.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="brand"><div class="mark" aria-hidden="true"><span></span><span></span><span></span></div><div class="brand-name">sort<span>/</span>lab</div><div class="brand-divider"></div><span class="brand-caption">PYTHON ALGORITHM STUDIO</span></div>
-  <nav class="site-nav" aria-label="메인 메뉴"><a href="index.html" aria-current="page">정렬 실험실</a><a href="https://dmlab.kookmin.ac.kr:8766/assignments.html">구현 과제</a></nav>
-  <div class="runtime" id="runtime" data-state="idle" role="status"><span class="runtime-dot"></span><span id="runtime-text">실행 시 Python을 불러옵니다</span></div>
-</header>
+<header class="al-header topbar"><a class="al-brand" href="lab.html" aria-label="Algorithm Lab 홈"><span class="al-mark" aria-hidden="true">AL</span>Algorithm Lab</a><nav class="al-nav" aria-label="데모 메뉴"><a href="lab.html">둘러보기</a><a href="index.html" aria-current="page">Sorting 데모</a><a href="disjoint-set.html">Disjoint Set 데모</a></nav><div class="runtime" id="runtime" data-state="idle" role="status"><span class="runtime-dot"></span><span id="runtime-text">실행 시 Python을 불러옵니다</span></div></header>
 <main>
   <div class="page-heading"><div><h1>정렬을, 한 줄씩 들여다보기.</h1><p class="intro">코드를 바꾸고 실행해 보세요. 배열이 정렬되는 과정을 따라갈 수 있습니다.</p></div><span class="shortcut"><kbd>⌘ / Ctrl</kbd> + <kbd>Enter</kbd> 실행</span></div>
   <div class="workspace">
@@ -66,7 +63,7 @@ main{max-width:1600px;margin:0 auto;padding:30px 40px 24px}.page-heading{display
     </div>
   </div>
   <details class="details"><summary>사용 방법과 지원 범위</summary><div class="help-content"><p><strong>내 코드로 실행하기</strong><br><code>def sort(arr):</code> 안에 정렬 코드를 작성하세요. 배열을 직접 수정하거나 새 숫자 리스트를 반환할 수 있습니다. 실행 후 슬라이더와 이전·다음 버튼으로 원하는 순간을 살펴보세요.<br><strong>파란 줄은 실행 직전, 주황색 줄은 비교 결과를 보여주는 단계입니다.</strong> 비교할 때 A는 왼쪽 값, B는 오른쪽 값입니다. 다음 비교 버튼으로 비교 단계만 찾아갈 수 있습니다.</p><p><strong>알아두기</strong><br>숫자 비교(&lt;, &lt;=, &gt;, &gt;=, ==, !=)를 표시합니다. 비교 횟수에는 반복 조건과 인덱스 범위 검사도 포함됩니다. key·pivot처럼 따로 저장한 값은 비교 카드와 점선 기준선으로 표시하며, 같은 값의 막대를 임의로 강조하지 않습니다. 보조 배열의 원소는 아래 배열에서 강조합니다.<br>기본 화면은 최상위 <code>sort</code> 함수의 배열을 추적합니다. 현재 함수의 보조 배열과 재귀 호출은 아래 변수 영역에 표시됩니다. <code>sorted()</code>와 <code>list.sort()</code> 내부 단계는 표시되지 않습니다.<br>최대 12,000개 기록, 실행은 최대 7초로 제한합니다. 최초 실행 시 인터넷으로 Python을 불러오며, 코드는 브라우저 안에서 실행됩니다.</p></div></details>
-  <footer class="footer"><span>SORT / LAB <span aria-hidden="true">·</span> 직접 실행하며 배우는 알고리즘</span><span>Powered by <a href="https://pyodide.org/" target="_blank" rel="noopener noreferrer">Pyodide</a> · 서버 없이 실행</span></footer>
+  <footer class="footer"><span>Algorithm Lab <span aria-hidden="true">·</span> 직접 실행하며 배우는 알고리즘</span><span>Powered by <a href="https://pyodide.org/" target="_blank" rel="noopener noreferrer">Pyodide</a> · 서버 없이 실행</span><a href="https://dmlab.kookmin.ac.kr:8766/assignments.html">구현 과제 바로가기</a></footer>
 </main>
 <script id="python-engine" type="text/plain">
 import sys, json, time, math, io, contextlib, ast, operator

@@ -1,8 +1,14 @@
-# SORT / LAB
+# Algorithm Lab
 
-Python 정렬 코드를 입력하고 배열의 변화와 비교 연산을 애니메이션으로 살펴보는 정적 웹 서비스입니다.
+정렬과 서로소 집합의 동작을 직접 실행하며 살펴보는 인터랙티브 알고리즘 실험실입니다.
 
-**접속:** https://dm.kookmin.ac.kr/sorting/
+**첫 화면:** https://dm.kookmin.ac.kr/sorting/lab.html
+
+- Sorting 데모: https://dm.kookmin.ac.kr/sorting/ (`index.html`, 기존 주소 유지)
+- Disjoint Set 데모: https://dm.kookmin.ac.kr/sorting/disjoint-set.html
+- 공통 메뉴 스타일: `lab-nav.css`
+
+Disjoint Set은 집합의 원소 목록을 관리하는 개념 시각화입니다. 실제 부모 트리나 경로 압축을 구현한 Union-Find 성능 데모는 아닙니다. 0–99의 정수를 최대 18개까지 생성할 수 있으며, 자동 예제·속도 조절·되돌리기를 지원합니다.
 
 https://kmudmlab.github.io/sorting/ 주소로 접속해도 같은 사이트로 이동합니다.
 

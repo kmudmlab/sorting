@@ -1,0 +1,10 @@
+/* Shared Algorithm Lab navigation; scoped to avoid demo styles. */
+.al-header{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 28px;min-height:84px;height:auto;padding:19px 40px;margin:0;background:#fff;border-bottom:1px solid #dfe6e2;font-family:Inter,Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;color:#203c35}
+.al-header .al-brand{display:flex;align-items:center;gap:11px;color:#203c35;text-decoration:none;white-space:nowrap;font-size:22px;font-weight:750;letter-spacing:-.6px}
+.al-mark{display:grid;place-items:center;width:35px;height:35px;border-radius:10px;background:#176d60;color:white;font-size:17px;font-weight:700;letter-spacing:-2px;padding-right:2px}
+.al-header .al-nav{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:13px}
+.al-header .al-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border-radius:8px;color:#52675f;text-decoration:none;white-space:nowrap;font-weight:500}
+.al-header .al-nav a:hover{background:#f0f5f1;color:#176d60}.al-header .al-nav a[aria-current=page]{background:#e7f1eb;color:#155c50;font-weight:700}
+.al-header a:focus-visible{outline:3px solid #358b7d;outline-offset:3px}.al-header .runtime{margin-left:auto;font-size:12px}
+@media(max-width:1100px){.al-header .runtime{display:none}}
+@media(max-width:650px){.al-header{padding:16px 18px;gap:12px}.al-header .al-brand{font-size:20px}.al-header .al-nav{width:100%;gap:3px}.al-header .al-nav a{font-size:12px;padding:8px 10px}}
